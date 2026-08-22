@@ -1,6 +1,6 @@
-# Entrega 1
+# Planejamento
 
-Esta seção reúne toda a documentação produzida na Entrega 1 do projeto.
+Esta seção reúne toda a documentação de planejamento do projeto.
 
 ## Conteúdo
 
