@@ -459,199 +459,347 @@
 
 <h1 id="historias-de-usuario-backlog">Histórias de Usuário (Backlog)</h1>
 <h1 id="historias-de-usuario">HISTÓRIAS DE USUÁRIO</h1>
-<h2 id="01-aprovacao-de-novos-usuarios">01 · Aprovação de novos usuários</h2>
-<blockquote>
-<p>Como <strong>Administrador</strong>, quero visualizar e gerenciar as solicitações de novos cadastros.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao">Critérios de aceitação</h3>
-<ol>
-<li>O fluxo de aprovação é acionado assim que o usuário realiza a escolha de perfil e preenche o formulário específico de seu grupo (<strong>"1 form pra cada"</strong>).</li>
-<li>O painel administrativo exibe uma fila de solicitações pendentes de validação contendo os dados inseridos pelo usuário.</li>
-<li>O administrador pode aprovar ou rejeitar a solicitação de acesso de forma individual e manual.</li>
-<li>O acesso às funcionalidades restritas e a liberação do perfil no banco de dados do capítulo ocorrem apenas após a <strong>homologação manual</strong> realizada pelo administrador.</li>
-</ol>
-<hr />
-<h2 id="02-ativar-perfil-de-estudante-e-informar-previsao-de-formatura">02 · Ativar perfil de estudante e informar previsão de formatura</h2>
-<blockquote>
-<p>Como <strong>Estudante</strong>, quero enviar meu comprovante de matrícula e minha data estimada de formatura, para que meu acesso estudantil seja validado e liberado na plataforma.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_1">Critérios de aceitação</h3>
-<ol>
-<li>O formulário exige que o estudante faça o <strong>upload obrigatório do comprovante de matrícula</strong> ativo de sua universidade e digite a <strong>data de previsão de sua formatura</strong>.</li>
-<li>O sistema armazena a data de formatura informada e agenda uma rotina para <strong>cortar o acesso de estudante automaticamente</strong> assim que o prazo de formação for atingido.</li>
-<li>Enquanto o perfil estudantil não é aprovado ou caso a data informada expire, as <strong>funcionalidades e abas exclusivas da área do estudante na barra lateral permanecem bloqueadas</strong> para o usuário.</li>
-<li>O cadastro de estudante passa por uma etapa de <strong>aprovação manual pela área de administração</strong> no painel de controle antes de liberar os acessos.</li>
-</ol>
-<hr />
-<h2 id="03-visualizar-todos-os-eventos-disponiveis">03 · Visualizar todos os eventos disponíveis</h2>
-<blockquote>
-<p>Como <strong>Usuário</strong>, quero visualizar uma vitrine centralizada de todos os eventos e webinars do capítulo, para encontrar oportunidades de aprendizado e networking de forma rápida.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_2">Critérios de aceitação</h3>
-<ol>
-<li>A plataforma deve exibir uma aba ou calendário de eventos atualizados automaticamente a partir da integração com a API de eventos do Sympla.</li>
-<li>Cada evento listado deve destacar título, data, palestrantes envolvidos e se ele concede isenção de taxas de emissão de certificado para membros.</li>
-<li>O painel deve permitir que o estudante use filtros de busca específicos, separando:</li>
-<li>Webinars</li>
-<li>Eventos Regionais</li>
-<li>Atividades do Student Club</li>
-</ol>
-<hr />
-<h2 id="04-me-inscrever-em-eventos-do-capitulo">04 · Me inscrever em eventos do capítulo</h2>
-<blockquote>
-<p>Como <strong>Usuário</strong>, quero me inscrever nos eventos e webinars disponíveis diretamente pela plataforma, para garantir minha participação sem complicação de dados.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_3">Critérios de aceitação</h3>
-<ol>
-<li>Ao clicar em se inscrever, o sistema deve utilizar de forma automática as informações básicas de cadastro do estudante (nome e e-mail principal).</li>
-<li>O e-mail utilizado na inscrição do evento deve coincidir obrigatoriamente com o e-mail de login da Área de Membros para que a futura validação de presença funcione.</li>
-<li>O estudante deve receber uma notificação de confirmação da inscrição na plataforma e um aviso complementar por e-mail.</li>
-</ol>
-<hr />
-<h2 id="05-visualizar-historico-de-eventos-participados">05 · Visualizar histórico de eventos participados</h2>
-<blockquote>
-<p>Como <strong>Usuário</strong>, quero visualizar a lista de eventos passados em que estive presente, para acompanhar meu progresso e acessar meus certificados sem custos.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_4">Critérios de aceitação</h3>
-<ol>
-<li>O estudante deve ter acesso a uma aba chamada <strong>"Eventos Passados"</strong> que exibe todo o histórico de eventos em que o check-in foi devidamente realizado.</li>
-<li>O status de participação (presença) do estudante deve mudar para confirmado assim que a lista de presença for processada, via planilha importada ou sincronização via API.</li>
-<li>Para cada evento com presença validada, o sistema deve exibir um botão para baixar o certificado gratuitamente, com isenção da taxa de emissão que é cobrada de não filiados.</li>
-</ol>
-<hr />
-<h2 id="06-criar-conta-e-verificar-e-mail">06 · Criar conta e verificar e-mail</h2>
+<h2 id="pessoa">Pessoa</h2>
+<h3 id="01-criar-conta-e-verificar-e-mail">01 · Criar conta e verificar e-mail</h3>
 <blockquote>
 <p>Como <strong>Pessoa</strong>, quero criar conta com e-mail ou login social, para acessar o portal sem ser filiada.</p>
 </blockquote>
 <ol>
-<li>Cadastro pede apenas nome, e-mail e senha; nenhum campo de PMI ID, matrícula ou voluntariado aparece aqui.</li>
-<li>Login com Google ou LinkedIn dispensa a verificação de e-mail e permite vincular a uma conta local existente após confirmação por senha.</li>
-<li>Link de verificação expira em 24 horas, é de uso único e pode ser reenviado a cada 2 minutos.</li>
-<li>Conta não verificada não acessa o portal.</li>
-<li>E-mail já cadastrado exibe caminho de recuperação sem confirmar por outra via que a conta existe.</li>
+<li>
+<p>Cadastro pede apenas nome, e-mail e senha; nenhum campo de PMI ID, matrícula ou voluntariado aparece aqui.</p>
+</li>
+<li>
+<p>Login com Google ou LinkedIn dispensa a verificação de e-mail e permite vincular a uma conta local existente após confirmação por senha.</p>
+</li>
+<li>
+<p>Link de verificação expira em 24 horas, é de uso único e pode ser reenviado a cada 2 minutos.</p>
+</li>
+<li>
+<p>Conta não verificada não acessa o portal.</p>
+</li>
+<li>
+<p>E-mail já cadastrado exibe caminho de recuperação sem confirmar por outra via que a conta existe.</p>
+</li>
 </ol>
 <hr />
-<h2 id="07-responder-o-onboarding">07 · Responder o onboarding</h2>
+<h3 id="02-responder-o-onboarding">02 · Responder o onboarding</h3>
 <blockquote>
 <p>Como <strong>Pessoa</strong>, quero informar interesse e momento de carreira, para receber um painel inicial coerente com o que busco.</p>
 </blockquote>
 <ol>
-<li>Três passos: interesse, momento de carreira e "já é filiado ao PMI?".</li>
-<li>Todo passo tem "Pular por agora" e o abandono não bloqueia o acesso.</li>
-<li>Responder "Sim, tenho PMI ID" encaminha à história 07.</li>
-<li>As respostas alimentam o painel da história 05 e ficam editáveis no perfil.</li>
-<li>Concluído ou pulado, o onboarding não reaparece, mas segue acessível pelo perfil.</li>
+<li>
+<p>Três passos: interesse, momento de carreira e "já é filiado ao PMI?".</p>
+</li>
+<li>
+<p>Todo passo tem "Pular por agora" e o abandono não bloqueia o acesso.</p>
+</li>
+<li>
+<p>Responder "Sim, tenho PMI ID" encaminha à história 07.</p>
+</li>
+<li>
+<p>As respostas alimentam o painel da história 05 e ficam editáveis no perfil.</p>
+</li>
+<li>
+<p>Concluído ou pulado, o onboarding não reaparece, mas segue acessível pelo perfil.</p>
+</li>
 </ol>
 <hr />
-<h2 id="08-controlar-meus-consentimentos-e-meus-dados">08 · Controlar meus consentimentos e meus dados</h2>
+<h3 id="03-controlar-meus-consentimentos-e-meus-dados">03 · Controlar meus consentimentos e meus dados</h3>
 <blockquote>
 <p>Como <strong>Pessoa</strong>, quero escolher item a item o que autorizo e poder sair, para exercer meus direitos de titular.</p>
 </blockquote>
 <ol>
-<li>Quatro consentimentos independentes: transacional (obrigatório), newsletter, diretório de membros, WhatsApp.</li>
-<li>Cada aceite e cada revogação grava finalidade, versão do texto, data, hora e IP.</li>
-<li>Comunicação transacional (verificação, decisão sobre papel, expiração) é enviada por e-mail independentemente das preferências; divulgação respeita os consentimentos.</li>
-<li>Envio por WhatsApp exige número verificado.</li>
-<li>Exportação dos dados em JSON e pedido de exclusão com reautenticação, informando o que é anonimizado em vez de apagado.</li>
+<li>
+<p>Quatro consentimentos independentes: transacional (obrigatório), newsletter, diretório de membros, WhatsApp.</p>
+</li>
+<li>
+<p>Cada aceite e cada revogação grava finalidade, versão do texto, data, hora e IP.</p>
+</li>
+<li>
+<p>Comunicação transacional (verificação, decisão sobre papel, expiração) é enviada por e-mail independentemente das preferências; divulgação respeita os consentimentos.</p>
+</li>
+<li>
+<p>Envio por WhatsApp exige número verificado.</p>
+</li>
+<li>
+<p>Exportação dos dados em JSON e pedido de exclusão com reautenticação, informando o que é anonimizado em vez de apagado.</p>
+</li>
 </ol>
 <hr />
-<h2 id="09-validar-minha-filiacao-por-pmi-id">09 · Validar minha filiação por PMI ID</h2>
+<h3 id="04-validar-minha-filiacao-por-pmi-id">04 · Validar minha filiação por PMI ID</h3>
 <blockquote>
 <p>Como <strong>Pessoa</strong> filiada ao PMI, quero informar meu PMI ID, para receber o papel Filiado sem enviar documento.</p>
 </blockquote>
 <ol>
-<li>A consulta ocorre contra a base local importada, não contra o PMI em tempo real.</li>
-<li><strong>PMI ID e e-mail coincidentes:</strong> papel concedido na hora, com validade igual à expiração registrada na base.</li>
-<li><strong>PMI ID existe, e-mail diverge:</strong> código de 6 dígitos enviado ao e-mail registrado no PMI Global — nunca ao digitado no portal — válido por 15 minutos e 3 tentativas.</li>
-<li><strong>PMI ID não encontrado:</strong> a mensagem informa que a sincronização leva até 5 dias úteis e não afirma que a pessoa não é filiada. Duas saídas: aguardar (reserva o PMI ID e concede automaticamente quando aparecer na importação) ou enviar comprovante para análise manual.</li>
-<li>Um mesmo PMI ID não pode estar ativo em duas contas.</li>
-<li>Tentativas limitadas a 5 por hora por conta.</li>
+<li>
+<p>A consulta ocorre contra a base local importada, não contra o PMI em tempo real.</p>
+</li>
+<li>
+<p><strong>PMI ID e e-mail coincidentes:</strong> papel concedido na hora, com validade igual à expiração registrada na base.</p>
+</li>
+<li>
+<p><strong>PMI ID existe, e-mail diverge:</strong> código de 6 dígitos enviado ao e-mail registrado no PMI Global — nunca ao digitado no portal — válido por 15 minutos e 3 tentativas.</p>
+</li>
+<li>
+<p><strong>PMI ID não encontrado:</strong> a mensagem informa que a sincronização leva até 5 dias úteis e não afirma que a pessoa não é filiada. Duas saídas: aguardar (reserva o PMI ID e concede automaticamente quando aparecer na importação) ou enviar comprovante para análise manual.</p>
+</li>
+<li>
+<p>Um mesmo PMI ID não pode estar ativo em duas contas.</p>
+</li>
+<li>
+<p>Tentativas limitadas a 5 por hora por conta.</p>
+</li>
 </ol>
 <hr />
-<h2 id="10-acessar-o-portal-da-transparencia-do-capitulo">10 · Acessar o Portal da Transparência do capítulo</h2>
-<blockquote>
-<p>Como <strong>Voluntário</strong>, quero visualizar os dados analíticos de participação no Portal da Transparência, para entender o impacto dos eventos que realizamos.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_5">Critérios de aceitação</h3>
-<ol>
-<li>O link de acesso ao painel do Portal da Transparência fica visível <strong>única e exclusivamente</strong> para usuários com perfil de voluntário ativo ou administrador homologados no banco de dados.</li>
-<li>O portal exibe gráficos e dados consolidados com métricas de participações totais de membros no ano.</li>
-<li>O sistema permite detalhar as participações de forma individualizada por cada evento específico realizado.</li>
-<li>Para garantir a segurança, nenhuma informação confidencial ou dados de contato sensíveis dos participantes comuns é exibida no portal, apenas métricas e contagens quantitativas.</li>
-</ol>
-<hr />
-<h2 id="11-publicar-avisos-integrados-com-disparo-de-e-mail">11 · Publicar avisos integrados com disparo de e-mail</h2>
-<blockquote>
-<p>Como <strong>Voluntário de comunicação</strong>, quero publicar comunicados oficiais na plataforma, para que o aviso fique fixado no portal e seja disparado por e-mail para a comunidade.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_6">Critérios de aceitação</h3>
-<ol>
-<li>O voluntário de comunicação preenche um formulário de aviso contendo:</li>
-<li>Título</li>
-<li>Mensagem</li>
-<li>Seleção do público-alvo: Estudantes, Filiados, Voluntários ou Geral</li>
-<li>Ao publicar, o comunicado é exibido imediatamente na seção de avisos da área logada dos perfis selecionados.</li>
-<li>De forma automática e em segundo plano, o sistema realiza o disparo integrado de uma cópia exata do aviso para o e-mail de todos os usuários que pertencem ao público-alvo.</li>
-<li>O sistema impede novos disparos repetidos para o mesmo grupo em um intervalo inferior a <strong>5 minutos</strong>, para evitar spam.</li>
-</ol>
-<hr />
-<h2 id="12-cadastrar-perfil-profissional-na-vitrine-de-curriculos">12 · Cadastrar perfil profissional na Vitrine de Currículos</h2>
-<blockquote>
-<p>Como <strong>Voluntário</strong>, quero preencher minhas competências na Vitrine de Currículos, para aumentar minha visibilidade de carreira perante os filiados seniores que têm poder de contratação.</p>
-</blockquote>
-<h3 id="criterios-de-aceitacao_7">Critérios de aceitação</h3>
-<ol>
-<li>O voluntário tem acesso a uma tela para estruturar seu perfil técnico, podendo:</li>
-<li>Fazer o upload de uma foto;</li>
-<li>Escrever uma mini bio;</li>
-<li>Inserir o link direto de seu LinkedIn.</li>
-<li>Ele pode listar suas principais habilidades técnicas, certificações e marcar se está ativamente <strong>"Disponível para Oportunidades"</strong>.</li>
-<li>Ao salvar, as informações são catalogadas na <strong>"Vitrine de Currículos"</strong> unificada do PMI DF.</li>
-<li>A busca e a visualização detalhada desses currículos ficam restritas aos filiados profissionais e parceiros comerciais autorizados, protegendo a privacidade dos dados de acordo com a governança do capítulo.</li>
-</ol>
-<hr />
-<h2 id="13-consultar-vagas-e-candidatar-se">13 · Consultar vagas e candidatar-se</h2>
+<h3 id="05-consultar-vagas-e-candidatar-se">05 · Consultar vagas e candidatar-se</h3>
 <blockquote>
 <p>Como <strong>Pessoa</strong>, quero ver as vagas com carga horária e contrapartida e me candidatar, para ser avaliada pela diretoria.</p>
 </blockquote>
 <ol>
-<li>Cada vaga exibe título, diretoria, descrição, competências, carga horária semanal, duração e o que o voluntário leva ao final.</li>
-<li>O catálogo é visível a qualquer conta autenticada, independente de papel.</li>
-<li>Candidatura pede disponibilidade real em horas por semana, competências, LinkedIn e motivação.</li>
-<li>O envio notifica o diretor da área; não é possível ter duas candidaturas simultâneas para a mesma vaga.</li>
-<li>Vagas encerradas saem do catálogo na data de encerramento.</li>
+<li>
+<p>Cada vaga exibe título, diretoria, descrição, competências, carga horária semanal, duração e o que o voluntário leva ao final.</p>
+</li>
+<li>
+<p>O catálogo é visível a qualquer conta autenticada, independente de papel.</p>
+</li>
+<li>
+<p>Candidatura pede disponibilidade real em horas por semana, competências, LinkedIn e motivação.</p>
+</li>
+<li>
+<p>O envio notifica o diretor da área; não é possível ter duas candidaturas simultâneas para a mesma vaga.</p>
+</li>
+<li>
+<p>Vagas encerradas saem do catálogo na data de encerramento.</p>
+</li>
 </ol>
 <hr />
-<h3 id="14-consultar-os-numeros-do-capitulo-f2">14 · Consultar os números do capítulo <code>F2</code></h3>
+<h3 id="06-consultar-os-numeros-do-capitulo-f2">06 · Consultar os números do capítulo <code>F2</code></h3>
 <blockquote>
 <p>Como <strong>Pessoa</strong>, mesmo sem login, quero ver o que o PMI-DF entregou no ano, para conhecer a atuação do capítulo.</p>
 </blockquote>
-<p><strong>Critérios de aceite</strong>
-1. Página pública com filiados ativos, eventos realizados, participações, voluntários ativos, horas de voluntariado validadas, projetos entregues e PDUs distribuídos.
-2. Todos os números são calculados a partir das bases do sistema; nenhum é digitado.
-3. Cada indicador informa a data da última atualização.
-4. A lista de eventos do ano é exibida com inscritos e participantes.</p>
+<p><strong>Critérios de aceite</strong></p>
+<ol>
+<li>
+<p>Página pública com filiados ativos, eventos realizados, participações, voluntários ativos, horas de voluntariado validadas, projetos entregues e PDUs distribuídos.</p>
+</li>
+<li>
+<p>Todos os números são calculados a partir das bases do sistema; nenhum é digitado.</p>
+</li>
+<li>
+<p>Cada indicador informa a data da última atualização.</p>
+</li>
+<li>
+<p>A lista de eventos do ano é exibida com inscritos e participantes.</p>
+</li>
+</ol>
 <hr />
-<h3 id="15-consultar-e-editar-a-base-de-membros-mvp">15 · Consultar e editar a base de membros <code>MVP</code></h3>
+<h2 id="usuario">Usuário</h2>
+<h3 id="07-visualizar-todos-os-eventos-disponiveis">07 · Visualizar todos os eventos disponíveis</h3>
+<blockquote>
+<p>Como <strong>Usuário</strong>, quero visualizar uma vitrine centralizada de todos os eventos e webinars do capítulo, para encontrar oportunidades de aprendizado e networking de forma rápida.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>A plataforma deve exibir uma aba ou calendário de eventos atualizados automaticamente a partir da integração com a API de eventos do Sympla.</p>
+</li>
+<li>
+<p>Cada evento listado deve destacar título, data, palestrantes envolvidos e se ele concede isenção de taxas de emissão de certificado para membros.</p>
+</li>
+<li>
+<p>O painel deve permitir que o estudante use filtros de busca específicos, separando:</p>
+</li>
+<li>
+<p>Webinars</p>
+</li>
+<li>
+<p>Eventos Regionais</p>
+</li>
+<li>
+<p>Atividades do Student Club</p>
+</li>
+</ol>
+<hr />
+<h3 id="08-visualizar-historico-de-eventos-participados">08 · Visualizar histórico de eventos participados</h3>
+<blockquote>
+<p>Como <strong>Usuário</strong>, quero visualizar a lista de eventos passados em que estive presente, para acompanhar meu progresso e acessar meus certificados sem custos.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao_1">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>O estudante deve ter acesso a uma aba chamada <strong>"Eventos Passados"</strong> que exibe todo o histórico de eventos em que o check-in foi devidamente realizado.</p>
+</li>
+<li>
+<p>O status de participação (presença) do estudante deve mudar para confirmado assim que a lista de presença for processada, via planilha importada ou sincronização via API.</p>
+</li>
+<li>
+<p>Para cada evento com presença validada, o sistema deve exibir um botão para baixar o certificado gratuitamente, com isenção da taxa de emissão que é cobrada de não filiados.</p>
+</li>
+</ol>
+<hr />
+<h2 id="estudante">Estudante</h2>
+<h3 id="09-ativar-perfil-de-estudante-e-informar-previsao-de-formatura">09 · Ativar perfil de estudante e informar previsão de formatura</h3>
+<blockquote>
+<p>Como <strong>Estudante</strong>, quero enviar meu comprovante de matrícula e minha data estimada de formatura, para que meu acesso estudantil seja validado e liberado na plataforma.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao_2">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>O formulário exige que o estudante faça o <strong>upload obrigatório do comprovante de matrícula</strong> ativo de sua universidade e digite a <strong>data de previsão de sua formatura</strong>.</p>
+</li>
+<li>
+<p>O sistema armazena a data de formatura informada e agenda uma rotina para <strong>cortar o acesso de estudante automaticamente</strong> assim que o prazo de formação for atingido.</p>
+</li>
+<li>
+<p>Enquanto o perfil estudantil não é aprovado ou caso a data informada expire, as <strong>funcionalidades e abas exclusivas da área do estudante na barra lateral permanecem bloqueadas</strong> para o usuário.</p>
+</li>
+<li>
+<p>O cadastro de estudante passa por uma etapa de <strong>aprovação manual pela área de administração</strong> no painel de controle antes de liberar os acessos.</p>
+</li>
+</ol>
+<hr />
+<h2 id="voluntario">Voluntário</h2>
+<h3 id="10-acessar-o-portal-da-transparencia-do-capitulo">10 · Acessar o Portal da Transparência do capítulo</h3>
+<blockquote>
+<p>Como <strong>Voluntário</strong>, quero visualizar os dados analíticos de participação no Portal da Transparência, para entender o impacto dos eventos que realizamos.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao_3">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>O link de acesso ao painel do Portal da Transparência fica visível <strong>única e exclusivamente</strong> para usuários com perfil de voluntário ativo ou administrador homologados no banco de dados.</p>
+</li>
+<li>
+<p>O portal exibe gráficos e dados consolidados com métricas de participações totais de membros no ano.</p>
+</li>
+<li>
+<p>O sistema permite detalhar as participações de forma individualizada por cada evento específico realizado.</p>
+</li>
+<li>
+<p>Para garantir a segurança, nenhuma informação confidencial ou dados de contato sensíveis dos participantes comuns é exibida no portal, apenas métricas e contagens quantitativas.</p>
+</li>
+</ol>
+<hr />
+<h3 id="11-publicar-avisos-integrados-com-disparo-de-e-mail">11 · Publicar avisos integrados com disparo de e-mail</h3>
+<blockquote>
+<p>Como <strong>Voluntário de comunicação</strong>, quero publicar comunicados oficiais na plataforma, para que o aviso fique fixado no portal e seja disparado por e-mail para a comunidade.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao_4">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>O voluntário de comunicação preenche um formulário de aviso contendo:</p>
+</li>
+<li>
+<p>Título</p>
+</li>
+<li>
+<p>Mensagem</p>
+</li>
+<li>
+<p>Seleção do público-alvo: Estudantes, Filiados, Voluntários ou Geral</p>
+</li>
+<li>
+<p>Ao publicar, o comunicado é exibido imediatamente na seção de avisos da área logada dos perfis selecionados.</p>
+</li>
+<li>
+<p>De forma automática e em segundo plano, o sistema realiza o disparo integrado de uma cópia exata do aviso para o e-mail de todos os usuários que pertencem ao público-alvo.</p>
+</li>
+<li>
+<p>O sistema impede novos disparos repetidos para o mesmo grupo em um intervalo inferior a <strong>5 minutos</strong>, para evitar spam.</p>
+</li>
+</ol>
+<hr />
+<h3 id="12-cadastrar-perfil-profissional-na-vitrine-de-curriculos">12 · Cadastrar perfil profissional na Vitrine de Currículos</h3>
+<blockquote>
+<p>Como <strong>Voluntário</strong>, quero preencher minhas competências na Vitrine de Currículos, para aumentar minha visibilidade de carreira perante os filiados seniores que têm poder de contratação.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao_5">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>O voluntário tem acesso a uma tela para estruturar seu perfil técnico, podendo:</p>
+</li>
+<li>
+<p>Fazer o upload de uma foto;</p>
+</li>
+<li>
+<p>Escrever uma mini bio;</p>
+</li>
+<li>
+<p>Inserir o link direto de seu LinkedIn.</p>
+</li>
+<li>
+<p>Ele pode listar suas principais habilidades técnicas, certificações e marcar se está ativamente <strong>"Disponível para Oportunidades"</strong>.</p>
+</li>
+<li>
+<p>Ao salvar, as informações são catalogadas na <strong>"Vitrine de Currículos"</strong> unificada do PMI DF.</p>
+</li>
+<li>
+<p>A busca e a visualização detalhada desses currículos ficam restritas aos filiados profissionais e parceiros comerciais autorizados, protegendo a privacidade dos dados de acordo com a governança do capítulo.</p>
+</li>
+</ol>
+<hr />
+<h2 id="administrador">Administrador</h2>
+<h3 id="13-aprovacao-de-novos-usuarios">13 · Aprovação de novos usuários</h3>
+<blockquote>
+<p>Como <strong>Administrador</strong>, quero visualizar e gerenciar as solicitações de novos cadastros.</p>
+</blockquote>
+<h3 id="criterios-de-aceitacao_6">Critérios de aceitação</h3>
+<ol>
+<li>
+<p>O fluxo de aprovação é acionado assim que o usuário realiza a escolha de perfil e preenche o formulário específico de seu grupo (<strong>"1 form pra cada"</strong>).</p>
+</li>
+<li>
+<p>O painel administrativo exibe uma fila de solicitações pendentes de validação contendo os dados inseridos pelo usuário.</p>
+</li>
+<li>
+<p>O administrador pode aprovar ou rejeitar a solicitação de acesso de forma individual e manual.</p>
+</li>
+<li>
+<p>O acesso às funcionalidades restritas e a liberação do perfil no banco de dados do capítulo ocorrem apenas após a <strong>homologação manual</strong> realizada pelo administrador.</p>
+</li>
+</ol>
+<hr />
+<h3 id="14-consultar-e-editar-a-base-de-membros-mvp">14 · Consultar e editar a base de membros <code>MVP</code></h3>
 <blockquote>
 <p>Como <strong>Administrador</strong>, quero buscar, filtrar e exportar os registros, para operar a base e prestar contas.</p>
 </blockquote>
-<p><strong>Critérios de aceite</strong>
-1. Tabela com nome, e-mail, papéis, situação e data de entrada, com paginação.
-2. Busca por nome ou e-mail e filtros por papel e situação.
-3. Exportação em CSV respeitando os filtros aplicados.
-4. Campos originados da base do PMI Global são somente leitura e sinalizados como tal.
-5. Suspender uma conta bloqueia o acesso e preserva o histórico.</p>
+<p><strong>Critérios de aceite</strong></p>
+<ol>
+<li>
+<p>Tabela com nome, e-mail, papéis, situação e data de entrada, com paginação.</p>
+</li>
+<li>
+<p>Busca por nome ou e-mail e filtros por papel e situação.</p>
+</li>
+<li>
+<p>Exportação em CSV respeitando os filtros aplicados.</p>
+</li>
+<li>
+<p>Campos originados da base do PMI Global são somente leitura e sinalizados como tal.</p>
+</li>
+<li>
+<p>Suspender uma conta bloqueia o acesso e preserva o histórico.</p>
+</li>
+</ol>
 <hr />
-<h3 id="16-consultar-participantes-de-um-evento-f2">16 · Consultar participantes de um evento <code>F2</code></h3>
+<h3 id="15-consultar-participantes-de-um-evento-f2">15 · Consultar participantes de um evento <code>F2</code></h3>
 <blockquote>
 <p>Como <strong>Administrador</strong>, quero ver quem participou de cada evento, para conferir a base e apurar presença.</p>
 </blockquote>
-<p><strong>Critérios de aceite</strong>
-1. Lista de participantes com nome, e-mail e vínculo com conta do portal, quando houver.
-2. E-mail sem conta vinculada é sinalizado como não reconciliado.
-3. Exportação em CSV.
-4. Sincronização manual disponível além da rotina automática.</p>
+<p><strong>Critérios de aceite</strong></p>
+<ol>
+<li>
+<p>Lista de participantes com nome, e-mail e vínculo com conta do portal, quando houver.</p>
+</li>
+<li>
+<p>E-mail sem conta vinculada é sinalizado como não reconciliado.</p>
+</li>
+<li>
+<p>Exportação em CSV.</p>
+</li>
+<li>
+<p>Sincronização manual disponível além da rotina automática.</p>
+</li>
+</ol>
 <hr />
 <h1 id="tabela-de-contribuicoes">Tabela de Contribuições</h1>
 <table>
@@ -673,25 +821,11 @@
 <td>Nome do revisor</td>
 </tr>
 <tr>
-<td>------------------------------------------------------------------------</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
 <td>2.0</td>
 <td>26/08/2026</td>
 <td>Agegação de novas historias</td>
 <td>Isabelle</td>
 <td>Nome do revisor</td>
-</tr>
-<tr>
-<td>------------------------------------------------------------------------</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>2.0</td>
