@@ -171,10 +171,48 @@
 4. O envio notifica o diretor da área; não é possível ter duas candidaturas simultâneas para a mesma vaga.
 5. Vagas encerradas saem do catálogo na data de encerramento.
 
+---
+
+### 14 · Consultar os números do capítulo `F2`
+> Como **Pessoa**, mesmo sem login, quero ver o que o PMI-DF entregou no ano, para conhecer a atuação do capítulo.
+
+**Critérios de aceite**
+1. Página pública com filiados ativos, eventos realizados, participações, voluntários ativos, horas de voluntariado validadas, projetos entregues e PDUs distribuídos.
+2. Todos os números são calculados a partir das bases do sistema; nenhum é digitado.
+3. Cada indicador informa a data da última atualização.
+4. A lista de eventos do ano é exibida com inscritos e participantes.
+
+---
+
+### 15 · Consultar e editar a base de membros `MVP`
+> Como **Administrador**, quero buscar, filtrar e exportar os registros, para operar a base e prestar contas.
+
+**Critérios de aceite**
+1. Tabela com nome, e-mail, papéis, situação e data de entrada, com paginação.
+2. Busca por nome ou e-mail e filtros por papel e situação.
+3. Exportação em CSV respeitando os filtros aplicados.
+4. Campos originados da base do PMI Global são somente leitura e sinalizados como tal.
+5. Suspender uma conta bloqueia o acesso e preserva o histórico.
+
+---
+
+### 16 · Consultar participantes de um evento `F2`
+> Como **Administrador**, quero ver quem participou de cada evento, para conferir a base e apurar presença.
+
+**Critérios de aceite**
+1. Lista de participantes com nome, e-mail e vínculo com conta do portal, quando houver.
+2. E-mail sem conta vinculada é sinalizado como não reconciliado.
+3. Exportação em CSV.
+4. Sincronização manual disponível além da rotina automática.
+
+---
+
 # Tabela de Contribuições
 
 | Versão | Data | Descrição | Autor | Revisor |
 |--------|------|-----------|-------|---------|
 | 1.0 | 26/08/2026 | Criação do documento | Isabelle | Nome do revisor |
 ------------------------------------------------------------------------
-| 2.0 | 26/08/2026 | Agegação d enovas historias | Isabelle | Nome do revisor |
+| 2.0 | 26/08/2026 | Agegação de novas historias | Isabelle | Nome do revisor |
+------------------------------------------------------------------------
+| 2.0 | 26/08/2026 | Agegação de novas historias | Isabelle | Nome do revisor |
