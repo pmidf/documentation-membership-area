@@ -365,24 +365,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Histórias de Usuário (Backlog)
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -399,36 +381,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#tabela-de-contribuicoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tabela de Contribuições
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -490,25 +442,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#tabela-de-contribuicoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tabela de Contribuições
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -525,7 +458,111 @@
 
 
 <h1 id="historias-de-usuario-backlog">Histórias de Usuário (Backlog)</h1>
-<p>Conteúdo referente às histórias de usuário e ao backlog do projeto.</p>
+<h1 id="historias-de-usuario">HISTÓRIAS DE USUÁRIO</h1>
+<h2 id="01-aprovacao-de-novos-usuarios">01 · Aprovação de novos usuários</h2>
+<p><strong>Como Administrador</strong>, quero visualizar e gerenciar as solicitações de novos cadastros.</p>
+<h3 id="criterios-de-aceitacao">Critérios de aceitação</h3>
+<ol>
+<li>O fluxo de aprovação é acionado assim que o usuário realiza a escolha de perfil e preenche o formulário específico de seu grupo (<strong>"1 form pra cada"</strong>).</li>
+<li>O painel administrativo exibe uma fila de solicitações pendentes de validação contendo os dados inseridos pelo usuário.</li>
+<li>O administrador pode aprovar ou rejeitar a solicitação de acesso de forma individual e manual.</li>
+<li>O acesso às funcionalidades restritas e a liberação do perfil no banco de dados do capítulo ocorrem apenas após a <strong>homologação manual</strong> realizada pelo administrador.</li>
+</ol>
+<hr />
+<h2 id="02-ativar-perfil-de-estudante-e-informar-previsao-de-formatura">02 · Ativar perfil de estudante e informar previsão de formatura</h2>
+<p><strong>Como Estudante</strong>, quero enviar meu comprovante de matrícula e minha data estimada de formatura, para que meu acesso estudantil seja validado e liberado na plataforma.</p>
+<h3 id="criterios-de-aceitacao_1">Critérios de aceitação</h3>
+<ol>
+<li>O formulário exige que o estudante faça o <strong>upload obrigatório do comprovante de matrícula</strong> ativo de sua universidade e digite a <strong>data de previsão de sua formatura</strong>.</li>
+<li>O sistema armazena a data de formatura informada e agenda uma rotina para <strong>cortar o acesso de estudante automaticamente</strong> assim que o prazo de formação for atingido.</li>
+<li>Enquanto o perfil estudantil não é aprovado ou caso a data informada expire, as <strong>funcionalidades e abas exclusivas da área do estudante na barra lateral permanecem bloqueadas</strong> para o usuário.</li>
+<li>O cadastro de estudante passa por uma etapa de <strong>aprovação manual pela área de administração</strong> no painel de controle antes de liberar os acessos.</li>
+</ol>
+<hr />
+<h2 id="03-visualizar-todos-os-eventos-disponiveis">03 · Visualizar todos os eventos disponíveis</h2>
+<p><strong>Como Usuário</strong>, quero visualizar uma vitrine centralizada de todos os eventos e webinars do capítulo, para encontrar oportunidades de aprendizado e networking de forma rápida.</p>
+<h3 id="criterios-de-aceitacao_2">Critérios de aceitação</h3>
+<ol>
+<li>A plataforma deve exibir uma aba ou calendário de eventos atualizados automaticamente a partir da integração com a API de eventos do Sympla.</li>
+<li>Cada evento listado deve destacar título, data, palestrantes envolvidos e se ele concede isenção de taxas de emissão de certificado para membros.</li>
+<li>O painel deve permitir que o estudante use filtros de busca específicos, separando:</li>
+<li>Webinars</li>
+<li>Eventos Regionais</li>
+<li>Atividades do Student Club</li>
+</ol>
+<hr />
+<h2 id="04-me-inscrever-em-eventos-do-capitulo">04 · Me inscrever em eventos do capítulo</h2>
+<p><strong>Como Usuário</strong>, quero me inscrever nos eventos e webinars disponíveis diretamente pela plataforma, para garantir minha participação sem complicação de dados.</p>
+<h3 id="criterios-de-aceitacao_3">Critérios de aceitação</h3>
+<ol>
+<li>Ao clicar em se inscrever, o sistema deve utilizar de forma automática as informações básicas de cadastro do estudante (nome e e-mail principal).</li>
+<li>O e-mail utilizado na inscrição do evento deve coincidir obrigatoriamente com o e-mail de login da Área de Membros para que a futura validação de presença funcione.</li>
+<li>O estudante deve receber uma notificação de confirmação da inscrição na plataforma e um aviso complementar por e-mail.</li>
+</ol>
+<hr />
+<h2 id="05-visualizar-historico-de-eventos-participados">05 · Visualizar histórico de eventos participados</h2>
+<p><strong>Como Usuário</strong>, quero visualizar a lista de eventos passados em que estive presente, para acompanhar meu progresso e acessar meus certificados sem custos.</p>
+<h3 id="criterios-de-aceitacao_4">Critérios de aceitação</h3>
+<ol>
+<li>O estudante deve ter acesso a uma aba chamada <strong>"Eventos Passados"</strong> que exibe todo o histórico de eventos em que o check-in foi devidamente realizado.</li>
+<li>O status de participação (presença) do estudante deve mudar para confirmado assim que a lista de presença for processada, via planilha importada ou sincronização via API.</li>
+<li>Para cada evento com presença validada, o sistema deve exibir um botão para baixar o certificado gratuitamente, com isenção da taxa de emissão que é cobrada de não filiados.</li>
+</ol>
+<hr />
+<h2 id="06-gamificacao">06 · Gamificação</h2>
+<p><strong>Falta definir a história de usuário e os critérios de aceitação relacionados à gamificação.</strong></p>
+<hr />
+<h2 id="08-gerenciar-e-editar-eventos-do-capitulo">08 · Gerenciar e editar eventos do capítulo</h2>
+<p><strong>Como Voluntário organizador</strong>, quero cadastrar, visualizar, editar e manejar as informações dos eventos sob minha responsabilidade, para manter a vitrine de eventos atualizada e sem erros para a comunidade.</p>
+<h3 id="criterios-de-aceitacao_5">Critérios de aceitação</h3>
+<ol>
+<li>O voluntário visualiza uma lista restrita contendo os eventos em que ele foi definido como organizador ou criador.</li>
+<li>O sistema fornece um formulário para cadastrar novos eventos informando:</li>
+<li>Título</li>
+<li>Data</li>
+<li>Descrição</li>
+<li>Link de inscrição do Sympla</li>
+<li>Se haverá ou não emissão de certificado gratuito</li>
+<li>O voluntário pode editar ou alterar dados de um evento (como alterar data, link ou palestrante) a qualquer momento antes de sua realização.</li>
+<li>O voluntário pode cancelar ou desativar um evento, o que o remove imediatamente da vitrine pública dos estudantes/filiados e dispara um e-mail automático de aviso aos inscritos.</li>
+</ol>
+<hr />
+<h2 id="10-acessar-o-portal-da-transparencia-do-capitulo">10 · Acessar o Portal da Transparência do capítulo</h2>
+<p><strong>Como Voluntário</strong>, quero visualizar os dados analíticos de participação no Portal da Transparência, para entender o impacto dos eventos que realizamos.</p>
+<h3 id="criterios-de-aceitacao_6">Critérios de aceitação</h3>
+<ol>
+<li>O link de acesso ao painel do Portal da Transparência fica visível <strong>única e exclusivamente</strong> para usuários com perfil de voluntário ativo ou administrador homologados no banco de dados.</li>
+<li>O portal exibe gráficos e dados consolidados com métricas de participações totais de membros no ano.</li>
+<li>O sistema permite detalhar as participações de forma individualizada por cada evento específico realizado.</li>
+<li>Para garantir a segurança, nenhuma informação confidencial ou dados de contato sensíveis dos participantes comuns é exibida no portal, apenas métricas e contagens quantitativas.</li>
+</ol>
+<hr />
+<h2 id="12-publicar-avisos-integrados-com-disparo-de-e-mail">12 · Publicar avisos integrados com disparo de e-mail</h2>
+<p><strong>Como Voluntário de comunicação</strong>, quero publicar comunicados oficiais na plataforma, para que o aviso fique fixado no portal e seja disparado por e-mail para a comunidade.</p>
+<h3 id="criterios-de-aceitacao_7">Critérios de aceitação</h3>
+<ol>
+<li>O voluntário de comunicação preenche um formulário de aviso contendo:</li>
+<li>Título</li>
+<li>Mensagem</li>
+<li>Seleção do público-alvo: Estudantes, Filiados, Voluntários ou Geral</li>
+<li>Ao publicar, o comunicado é exibido imediatamente na seção de avisos da área logada dos perfis selecionados.</li>
+<li>De forma automática e em segundo plano, o sistema realiza o disparo integrado de uma cópia exata do aviso para o e-mail de todos os usuários que pertencem ao público-alvo.</li>
+<li>O sistema impede novos disparos repetidos para o mesmo grupo em um intervalo inferior a <strong>5 minutos</strong>, para evitar spam.</li>
+</ol>
+<hr />
+<h2 id="13-cadastrar-perfil-profissional-na-vitrine-de-curriculos">13 · Cadastrar perfil profissional na Vitrine de Currículos</h2>
+<p><strong>Como Voluntário</strong>, quero preencher minhas competências na Vitrine de Currículos, para aumentar minha visibilidade de carreira perante os filiados seniores que têm poder de contratação.</p>
+<h3 id="criterios-de-aceitacao_8">Critérios de aceitação</h3>
+<ol>
+<li>O voluntário tem acesso a uma tela para estruturar seu perfil técnico, podendo:</li>
+<li>Fazer o upload de uma foto;</li>
+<li>Escrever uma mini bio;</li>
+<li>Inserir o link direto de seu LinkedIn.</li>
+<li>Ele pode listar suas principais habilidades técnicas, certificações e marcar se está ativamente <strong>"Disponível para Oportunidades"</strong>.</li>
+<li>Ao salvar, as informações são catalogadas na <strong>"Vitrine de Currículos"</strong> unificada do PMI DF.</li>
+<li>A busca e a visualização detalhada desses currículos ficam restritas aos filiados profissionais e parceiros comerciais autorizados, protegendo a privacidade dos dados de acordo com a governança do capítulo.</li>
+</ol>
+<hr />
 <h2 id="tabela-de-contribuicoes">Tabela de Contribuições</h2>
 <table>
 <thead>
@@ -540,9 +577,9 @@
 <tbody>
 <tr>
 <td>1.0</td>
-<td>dd/mm/aaaa</td>
+<td>26/08/2026</td>
 <td>Criação do documento</td>
-<td>Nome do autor</td>
+<td>Isabelle</td>
 <td>Nome do revisor</td>
 </tr>
 </tbody>

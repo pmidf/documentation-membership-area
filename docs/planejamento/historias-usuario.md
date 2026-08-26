@@ -67,13 +67,7 @@
 
 ---
 
-## 06 · Gamificação
-
-**Falta definir a história de usuário e os critérios de aceitação relacionados à gamificação.**
-
----
-
-## 08 · Gerenciar e editar eventos do capítulo
+## 07 · Gerenciar e editar eventos do capítulo
 
 **Como Voluntário organizador**, quero cadastrar, visualizar, editar e manejar as informações dos eventos sob minha responsabilidade, para manter a vitrine de eventos atualizada e sem erros para a comunidade.
 
@@ -91,7 +85,7 @@
 
 ---
 
-## 10 · Acessar o Portal da Transparência do capítulo
+## 08 · Acessar o Portal da Transparência do capítulo
 
 **Como Voluntário**, quero visualizar os dados analíticos de participação no Portal da Transparência, para entender o impacto dos eventos que realizamos.
 
@@ -104,7 +98,7 @@
 
 ---
 
-## 12 · Publicar avisos integrados com disparo de e-mail
+## 09 · Publicar avisos integrados com disparo de e-mail
 
 **Como Voluntário de comunicação**, quero publicar comunicados oficiais na plataforma, para que o aviso fique fixado no portal e seja disparado por e-mail para a comunidade.
 
@@ -120,7 +114,7 @@
 
 ---
 
-## 13 · Cadastrar perfil profissional na Vitrine de Currículos
+## 10 · Cadastrar perfil profissional na Vitrine de Currículos
 
 **Como Voluntário**, quero preencher minhas competências na Vitrine de Currículos, para aumentar minha visibilidade de carreira perante os filiados seniores que têm poder de contratação.
 
