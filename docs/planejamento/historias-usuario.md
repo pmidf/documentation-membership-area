@@ -4,7 +4,7 @@
 
 ## 01 · Aprovação de novos usuários
 
-**Como Administrador**, quero visualizar e gerenciar as solicitações de novos cadastros.
+> Como **Administrador**, quero visualizar e gerenciar as solicitações de novos cadastros.
 
 ### Critérios de aceitação
 
@@ -17,7 +17,7 @@
 
 ## 02 · Ativar perfil de estudante e informar previsão de formatura
 
-**Como Estudante**, quero enviar meu comprovante de matrícula e minha data estimada de formatura, para que meu acesso estudantil seja validado e liberado na plataforma.
+> Como **Estudante**, quero enviar meu comprovante de matrícula e minha data estimada de formatura, para que meu acesso estudantil seja validado e liberado na plataforma.
 
 ### Critérios de aceitação
 
@@ -30,7 +30,7 @@
 
 ## 03 · Visualizar todos os eventos disponíveis
 
-**Como Usuário**, quero visualizar uma vitrine centralizada de todos os eventos e webinars do capítulo, para encontrar oportunidades de aprendizado e networking de forma rápida.
+> Como **Usuário**, quero visualizar uma vitrine centralizada de todos os eventos e webinars do capítulo, para encontrar oportunidades de aprendizado e networking de forma rápida.
 
 ### Critérios de aceitação
 
@@ -45,7 +45,7 @@
 
 ## 04 · Me inscrever em eventos do capítulo
 
-**Como Usuário**, quero me inscrever nos eventos e webinars disponíveis diretamente pela plataforma, para garantir minha participação sem complicação de dados.
+> Como **Usuário**, quero me inscrever nos eventos e webinars disponíveis diretamente pela plataforma, para garantir minha participação sem complicação de dados.
 
 ### Critérios de aceitação
 
@@ -57,7 +57,7 @@
 
 ## 05 · Visualizar histórico de eventos participados
 
-**Como Usuário**, quero visualizar a lista de eventos passados em que estive presente, para acompanhar meu progresso e acessar meus certificados sem custos.
+> Como **Usuário**, quero visualizar a lista de eventos passados em que estive presente, para acompanhar meu progresso e acessar meus certificados sem custos.
 
 ### Critérios de aceitação
 
@@ -67,27 +67,58 @@
 
 ---
 
-## 07 · Gerenciar e editar eventos do capítulo
+## 06 · Criar conta e verificar e-mail
 
-**Como Voluntário organizador**, quero cadastrar, visualizar, editar e manejar as informações dos eventos sob minha responsabilidade, para manter a vitrine de eventos atualizada e sem erros para a comunidade.
+> Como **Pessoa**, quero criar conta com e-mail ou login social, para acessar o portal sem ser filiada.
 
-### Critérios de aceitação
-
-1. O voluntário visualiza uma lista restrita contendo os eventos em que ele foi definido como organizador ou criador.
-2. O sistema fornece um formulário para cadastrar novos eventos informando:
-   - Título
-   - Data
-   - Descrição
-   - Link de inscrição do Sympla
-   - Se haverá ou não emissão de certificado gratuito
-3. O voluntário pode editar ou alterar dados de um evento (como alterar data, link ou palestrante) a qualquer momento antes de sua realização.
-4. O voluntário pode cancelar ou desativar um evento, o que o remove imediatamente da vitrine pública dos estudantes/filiados e dispara um e-mail automático de aviso aos inscritos.
+1. Cadastro pede apenas nome, e-mail e senha; nenhum campo de PMI ID, matrícula ou voluntariado aparece aqui.
+2. Login com Google ou LinkedIn dispensa a verificação de e-mail e permite vincular a uma conta local existente após confirmação por senha.
+3. Link de verificação expira em 24 horas, é de uso único e pode ser reenviado a cada 2 minutos.
+4. Conta não verificada não acessa o portal.
+5. E-mail já cadastrado exibe caminho de recuperação sem confirmar por outra via que a conta existe.
 
 ---
 
-## 08 · Acessar o Portal da Transparência do capítulo
+## 07 · Responder o onboarding
 
-**Como Voluntário**, quero visualizar os dados analíticos de participação no Portal da Transparência, para entender o impacto dos eventos que realizamos.
+> Como **Pessoa**, quero informar interesse e momento de carreira, para receber um painel inicial coerente com o que busco.
+
+1. Três passos: interesse, momento de carreira e "já é filiado ao PMI?".
+2. Todo passo tem "Pular por agora" e o abandono não bloqueia o acesso.
+3. Responder "Sim, tenho PMI ID" encaminha à história 07.
+4. As respostas alimentam o painel da história 05 e ficam editáveis no perfil.
+5. Concluído ou pulado, o onboarding não reaparece, mas segue acessível pelo perfil.
+
+---
+
+## 08 · Controlar meus consentimentos e meus dados
+
+> Como **Pessoa**, quero escolher item a item o que autorizo e poder sair, para exercer meus direitos de titular.
+
+1. Quatro consentimentos independentes: transacional (obrigatório), newsletter, diretório de membros, WhatsApp.
+2. Cada aceite e cada revogação grava finalidade, versão do texto, data, hora e IP.
+3. Comunicação transacional (verificação, decisão sobre papel, expiração) é enviada por e-mail independentemente das preferências; divulgação respeita os consentimentos.
+4. Envio por WhatsApp exige número verificado.
+5. Exportação dos dados em JSON e pedido de exclusão com reautenticação, informando o que é anonimizado em vez de apagado.
+
+---
+
+## 09 · Validar minha filiação por PMI ID
+
+> Como **Pessoa** filiada ao PMI, quero informar meu PMI ID, para receber o papel Filiado sem enviar documento.
+
+1. A consulta ocorre contra a base local importada, não contra o PMI em tempo real.
+2. **PMI ID e e-mail coincidentes:** papel concedido na hora, com validade igual à expiração registrada na base.
+3. **PMI ID existe, e-mail diverge:** código de 6 dígitos enviado ao e-mail registrado no PMI Global — nunca ao digitado no portal — válido por 15 minutos e 3 tentativas.
+4. **PMI ID não encontrado:** a mensagem informa que a sincronização leva até 5 dias úteis e não afirma que a pessoa não é filiada. Duas saídas: aguardar (reserva o PMI ID e concede automaticamente quando aparecer na importação) ou enviar comprovante para análise manual.
+5. Um mesmo PMI ID não pode estar ativo em duas contas.
+6. Tentativas limitadas a 5 por hora por conta.
+
+---
+
+## 10 · Acessar o Portal da Transparência do capítulo
+
+> Como **Voluntário**, quero visualizar os dados analíticos de participação no Portal da Transparência, para entender o impacto dos eventos que realizamos.
 
 ### Critérios de aceitação
 
@@ -98,9 +129,9 @@
 
 ---
 
-## 09 · Publicar avisos integrados com disparo de e-mail
+## 11 · Publicar avisos integrados com disparo de e-mail
 
-**Como Voluntário de comunicação**, quero publicar comunicados oficiais na plataforma, para que o aviso fique fixado no portal e seja disparado por e-mail para a comunidade.
+> Como **Voluntário de comunicação**, quero publicar comunicados oficiais na plataforma, para que o aviso fique fixado no portal e seja disparado por e-mail para a comunidade.
 
 ### Critérios de aceitação
 
@@ -114,9 +145,9 @@
 
 ---
 
-## 10 · Cadastrar perfil profissional na Vitrine de Currículos
+## 12 · Cadastrar perfil profissional na Vitrine de Currículos
 
-**Como Voluntário**, quero preencher minhas competências na Vitrine de Currículos, para aumentar minha visibilidade de carreira perante os filiados seniores que têm poder de contratação.
+> Como **Voluntário**, quero preencher minhas competências na Vitrine de Currículos, para aumentar minha visibilidade de carreira perante os filiados seniores que têm poder de contratação.
 
 ### Critérios de aceitação
 
@@ -130,9 +161,20 @@
 
 ---
 
+## 13 · Consultar vagas e candidatar-se
 
-## Tabela de Contribuições
+> Como **Pessoa**, quero ver as vagas com carga horária e contrapartida e me candidatar, para ser avaliada pela diretoria.
 
-| Versão | Data       | Descrição              | Autor            | Revisor          |
-|--------|------------|-------------------------|-------------------|-------------------|
-| 1.0    | 26/08/2026 | Criação do documento    | Isabelle          | Nome do revisor   |
+1. Cada vaga exibe título, diretoria, descrição, competências, carga horária semanal, duração e o que o voluntário leva ao final.
+2. O catálogo é visível a qualquer conta autenticada, independente de papel.
+3. Candidatura pede disponibilidade real em horas por semana, competências, LinkedIn e motivação.
+4. O envio notifica o diretor da área; não é possível ter duas candidaturas simultâneas para a mesma vaga.
+5. Vagas encerradas saem do catálogo na data de encerramento.
+
+# Tabela de Contribuições
+
+| Versão | Data | Descrição | Autor | Revisor |
+|--------|------|-----------|-------|---------|
+| 1.0 | 26/08/2026 | Criação do documento | Isabelle | Nome do revisor |
+------------------------------------------------------------------------
+| 2.0 | 26/08/2026 | Agegação d enovas historias | Isabelle | Nome do revisor |
