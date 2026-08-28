@@ -9,5 +9,7 @@ nav:
       - Home: planejamento/home.md
       - PM Canvas: planejamento/pm-canvas.md
       - Benchmarking: planejamento/benchmarking.md
-      - Histórias de Usuário (Backlog): planejamento/historias-usuario.md
+      - Brainstorming: planejamento/brainstorming.md
+      - Histórias de Usuário (V.0): planejamento/historias-usuario-v0.md
+      - Histórias de Usuário (V.1): planejamento/historias-usuario-v1.md
       - Protótipos (v0, v1 e v2): planejamento/prototipos.md
