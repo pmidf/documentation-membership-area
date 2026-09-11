@@ -8,8 +8,16 @@ nav:
   - Planejamento:
       - Home: planejamento/home.md
       - PM Canvas: planejamento/pm-canvas.md
+      - Perfis de Usuário: planejamento/perfil-usuario.md
       - Benchmarking: planejamento/benchmarking.md
       - Brainstorming: planejamento/brainstorming.md
       - Histórias de Usuário (V.0): planejamento/historias-usuario-v0.md
       - Histórias de Usuário (V.1): planejamento/historias-usuario-v1.md
       - Protótipos (v0, v1 e v2): planejamento/prototipos.md
+  - Épicos e Histórias:
+      - ÉP-02 — Meu Perfil: epicos-historias/meu-perfil.md
+      - ÉP-04 — Clube de Benefícios: epicos-historias/clube-beneficios.md
+      - ÉP-05 — Agenda do PMI-DF: epicos-historias/agenda.md
+      - ÉP-06 — Conteúdo Exclusivo: epicos-historias/conteudo-exclusivo.md
+      - ÉP-07 — Vitrine: epicos-historias/vitrine.md
+      - ÉP-08 — Gamificação: epicos-historias/gamificacao.md

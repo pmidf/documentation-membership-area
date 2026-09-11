@@ -5,6 +5,7 @@ Esta seção reúne toda a documentação de planejamento do projeto.
 ## Conteúdo
 
 - [PM Canvas](pm-canvas.md)
+- [Perfis de Usuário](perfil-usuario.md)
 - [Brainstorming](brainstorming.md)
 - [Benchmarking](benchmarking.md)
 - [Histórias de Usuário (Backlog)](historias-usuario.md)
