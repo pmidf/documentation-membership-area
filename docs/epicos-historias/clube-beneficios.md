@@ -278,6 +278,6 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 
 | Versão | Data | Descrição | Autor | Revisor |
 |--------|------|-----------|-------|---------|
-| 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-04 (Clube de Benefícios) para Não-Filiado, Filiado e Admin | Vitor Leonardo | Nome do revisor |
-| 1.1 | 11/09/2026 | Atores movidos para perfil-usuario.md; referências ao ÉP-02 atualizadas após renumeração | Vitor Leonardo | Nome do revisor |
-| 1.2 | 11/09/2026 | Prévia desfocada (blur) para Não-Filiado; histórico de resgates unicamente em "Meu perfil"; US-04.07 passa a ser gestão e exportação de todos os benefícios com quantidade de resgates; tipos de resgate reduzidos a cupom e instrução; remoção de origem/dependências e da tabela de rastreabilidade | Vitor Leonardo | Nome do revisor |
+| 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-04 (Clube de Benefícios) para Não-Filiado, Filiado e Admin | Vitor Leonardo | Anne de Capdeville |
+| 1.1 | 11/09/2026 | Atores movidos para perfil-usuario.md; referências ao ÉP-02 atualizadas após renumeração | Vitor Leonardo | Anne de Capdeville |
+| 1.2 | 11/09/2026 | Prévia desfocada (blur) para Não-Filiado; histórico de resgates unicamente em "Meu perfil"; US-04.07 passa a ser gestão e exportação de todos os benefícios com quantidade de resgates; tipos de resgate reduzidos a cupom e instrução; remoção de origem/dependências e da tabela de rastreabilidade | Vitor Leonardo | Anne de Capdeville |
