@@ -62,7 +62,7 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 **Critérios de aceite**
 
 1. **Dado** que sou Não-Filiado, **quando** acesso "Clube de benefícios", **então** vejo a página com os *cards* dos benefícios vigentes **desfocados** (efeito *blur*), de modo que dá para perceber imagens e a quantidade de benefícios, mas não ler título, parceiro ou detalhes.
-2. **Dado** que a página está desfocada, **quando** olho a tela, **então** vejo sobre ela um painel fixo com a mensagem "Exclusivo para filiados", o CTA "Quero ser filiado" e o link "Já sou filiado — validar meu PMI ID".
+2. **Dado** que a página está desfocada, **quando** olho a tela, **então** um painel fixo com a mensagem "Exclusivo para filiados", o CTA "Quero ser filiado" e o link "Já sou filiado".
 3. **Dado** que tento clicar em um *card* desfocado, **quando** o clique acontece, **então** nada abre — o único caminho é pelo painel de filiação.
 4. **Dado** que clico em "Já sou filiado", **quando** sou levado ao fluxo de validação (ÉP-01), **então** ao retornar com filiação ativa o desfoque desaparece e a página passa a se comportar como em US-04.02.
 5. **Dado** que inspeciono a resposta da API como Não-Filiado, **quando** analiso o conteúdo, **então** recebo apenas a quantidade de benefícios e as imagens de capa — título, legenda, parceiro, descrição, código e instrução **não estão presentes**.
@@ -281,3 +281,4 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 | 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-04 (Clube de Benefícios) para Não-Filiado, Filiado e Admin | Vitor Leonardo | Anne de Capdeville |
 | 1.1 | 11/09/2026 | Atores movidos para perfil-usuario.md; referências ao ÉP-02 atualizadas após renumeração | Vitor Leonardo | Anne de Capdeville |
 | 1.2 | 11/09/2026 | Prévia desfocada (blur) para Não-Filiado; histórico de resgates unicamente em "Meu perfil"; US-04.07 passa a ser gestão e exportação de todos os benefícios com quantidade de resgates; tipos de resgate reduzidos a cupom e instrução; remoção de origem/dependências e da tabela de rastreabilidade | Vitor Leonardo | Anne de Capdeville |
+| 1.3 | 13/09/2026 | Alterações na lógica de funcionamento do clube de benefícios | Anne de Capdeville | Nome Revisor |
