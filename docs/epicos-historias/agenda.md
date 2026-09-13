@@ -260,13 +260,11 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 7. Confirmar o fuso horário retornado pela API do Sympla para start_date/end_date — a RN-05.01.4 assume America/Sao_Paulo, mas isso não está documentado na especificação consultada.
 
 ---
-
 ## Tabela de Contribuições
 
 | Versão | Data | Descrição | Autor | Revisor |
 |--------|------|-----------|-------|---------|
-
 | 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-05 (Agenda do PMI-DF) para Não-Filiado, Filiado e Admin, com análise da API Pública do Sympla v1.6.0 | Vitor Leonardo | Nome do revisor |
-| 1.1 | 11/09/2026 | Todos os eventos passam a vir do Sympla (sem cadastro manual, sem eventos exclusivos, sem check-in pelo portal); remoção de US-05.02, US-05.04, US-05.06 e US-05.10 e renumeração; US de números reescrita com enfoque analítico (filtros, seleção, agregados, CSV) | Vitor Leonardo | Nome do revisor |
-| 1.2 | 13/09/2026 | remoção de histórias antigas (US-02, US-04, US-06 e US-10 da versão anterior, não as US-05.02/04/06 atuais); US de números reescrita  | João Filipe | Revisão das US, regras de negócio e matriz de permissões |
+| 1.1 | 11/09/2026 | Todos os eventos passam a vir do Sympla (sem cadastro manual, sem eventos exclusivos, sem check-in pelo portal); remoção de histórias antigas (US-02, US-04, US-06 e US-10 da versão anterior, não as US-05.02/04/06 atuais); US de números reescrita com enfoque analítico (filtros, seleção, agregados, CSV) | Vitor Leonardo | Nome do revisor |
+| 1.2 | 13/09/2026 | Ajustes de revisão: frequência de sincronização de participantes (RN-05.04.1), matriz de permissões (coluna Visitante e acesso a números), confirmação pendente de timezone e do filtro `from` movidas para questões em aberto, esclarecimento do changelog da v1.1 | João Filipe | Nome do revisor |
 
