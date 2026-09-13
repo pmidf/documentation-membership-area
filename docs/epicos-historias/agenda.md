@@ -42,10 +42,10 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 | Agenda de eventos (lista e calendário) | L | L | L |
 | Detalhe de evento e link de inscrição no Sympla | L | L | L |
 | Próprio histórico de eventos (em "Meu perfil") | L | L | L |
-| Números dos eventos (por evento e agregados) | — | — | L / E |
-| Lista de participantes de um evento | — | — | L / E |
-| Sincronização com o Sympla (automática e manual) | — | — | E |
-| Conciliação de participações não vinculadas | — | — | E |
+| Números dos eventos (por evento e agregados) | — | — | L  |
+| Lista de participantes de um evento | — | — | L  |
+| Sincronização com o Sympla (automática e manual) | — | — | L |
+| Conciliação de participações não vinculadas | — | — | L |
 
 ### 1.3 Mapa das histórias
 
@@ -90,8 +90,9 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 - RN-05.01.1 — A agenda exibe **exclusivamente eventos publicados no Sympla** do PMI-DF, trazidos pela sincronização (US-05.03). Não há cadastro de eventos na plataforma.
 - RN-05.01.2 — A inscrição acontece **somente no Sympla**; a plataforma não coleta dados de inscrição nem cria pedidos. O reconhecimento da participação depende de o e-mail usado no Sympla coincidir com o e-mail principal ou um alternativo **verificado** da pessoa.
 - RN-05.01.3 — A agenda **não exibe** quantidade de inscritos nem quem vai ao evento.
-- RN-05.01.4 — Datas são exibidas no fuso `America/Sao_Paulo`, o mesmo padrão da API do Sympla.
+- RN-05.01.4 — Datas são exibidas no fuso America/Sao_Paulo. (ver questão em aberto sobre confirmação do fuso retornado pela API)
 - RN-05.01.5 — Filiado e Não-Filiado veem exatamente a mesma agenda.
+  
 
 ---
 
@@ -143,8 +144,9 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 **Regras de negócio**
 
+
 - RN-05.03.1 — **Todos os eventos vêm do Sympla.** A plataforma não permite criar nem editar eventos; qualquer correção é feita no Sympla e refletida na próxima sincronização.
-- RN-05.03.2 — A sincronização lê apenas eventos com `published = true` (padrão da API) e usa o filtro `from` para buscar eventos a partir de 12 meses atrás, garantindo o histórico.
+- RN-05.03.2 — A sincronização lê apenas eventos com published = true (padrão da API) e usa o filtro from, presumindo que ele filtra por data do evento, para buscar eventos a partir de 12 meses atrás, garantindo o histórico. (ver questão em aberto nº 5 — a semântica exata de from neste endpoint precisa ser confirmada)
 - RN-05.03.3 — O token `s_token` fica em cofre de segredos; nunca no código, no repositório ou no frontend.
 - RN-05.03.4 — Eventos nunca são excluídos pela sincronização — no máximo, marcados como cancelados.
 - RN-05.03.5 — A paginação por cursor é percorrida até o fim em cada execução; respostas `429` são respeitadas com espera antes de nova tentativa.
@@ -170,8 +172,7 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 7. **Dado** que um ingresso foi cancelado no Sympla, **quando** a sincronização detecta, **então** a participação é marcada como cancelada e sai do histórico da pessoa.
 
 **Regras de negócio**
-
-- RN-05.04.1 — Frequência: a cada hora nas 48 horas em torno da data do evento; depois 1 vez por dia durante 7 dias; depois encerra. Pode ser disparada manualmente pelo Admin a qualquer momento.
+- RN-05.04.1 — Frequência: 1 vez por dia para eventos futuros fora da janela abaixo; a cada hora nas 48 horas em torno da data do evento; depois 1 vez por dia durante 7 dias após o evento; depois encerra. Pode ser disparada manualmente pelo Admin a qualquer momento.
 - RN-05.04.2 — Vínculo por e-mail **não verificado** é proibido.
 - RN-05.04.3 — Participações não vinculadas são preservadas indefinidamente: são o gancho para reconhecer o histórico de quem se cadastrar depois.
 - RN-05.04.4 — Da lista de participantes, a plataforma armazena apenas nome, e-mail, tipo de ingresso, status do ingresso e check-in. Valores pagos e respostas de formulário customizado **não** são importados.
@@ -255,6 +256,8 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 3. **Valores de `ticket_status`** não estão enumerados na especificação da API. Precisamos confirmar com o Sympla quais valores existem para mapear "cancelado" com segurança.
 4. **Limites de requisição** (rate limit) da API não estão documentados. Confirmar antes de definir a frequência final de sincronização.
 5. **Eventos passados antes da plataforma existir:** até quando voltar na sincronização inicial? Hoje a RN-05.03.2 assume 12 meses.
+6. **Correções de check-in feitas no Sympla:** após o encerramento da janela de sync (7 dias pós-evento) não são mais capturadas automaticamente — só via "Sincronizar agora" manual. Isso é aceitável ou precisamos de uma janela residual (ex.: sync mensal por mais X meses)?
+7. Confirmar o fuso horário retornado pela API do Sympla para start_date/end_date — a RN-05.01.4 assume America/Sao_Paulo, mas isso não está documentado na especificação consultada.
 
 ---
 
@@ -262,5 +265,8 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 | Versão | Data | Descrição | Autor | Revisor |
 |--------|------|-----------|-------|---------|
+
 | 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-05 (Agenda do PMI-DF) para Não-Filiado, Filiado e Admin, com análise da API Pública do Sympla v1.6.0 | Vitor Leonardo | Nome do revisor |
 | 1.1 | 11/09/2026 | Todos os eventos passam a vir do Sympla (sem cadastro manual, sem eventos exclusivos, sem check-in pelo portal); remoção de US-05.02, US-05.04, US-05.06 e US-05.10 e renumeração; US de números reescrita com enfoque analítico (filtros, seleção, agregados, CSV) | Vitor Leonardo | Nome do revisor |
+| 1.2 | 13/09/2026 | remoção de histórias antigas (US-02, US-04, US-06 e US-10 da versão anterior, não as US-05.02/04/06 atuais); US de números reescrita  | João Filipe | Revisão das US, regras de negócio e matriz de permissões |
+
