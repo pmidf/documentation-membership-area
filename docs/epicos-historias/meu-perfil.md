@@ -366,8 +366,8 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 | Versão | Data | Descrição | Autor | Revisor |
 |--------|------|-----------|-------|---------|
-| 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-02 (Meu Perfil) para Não-Filiado, Filiado e Admin | Vitor Leonardo | Nome do revisor |
-| 1.1 | 11/09/2026 | Atores movidos para perfil-usuario.md; remoção de origem/dependências; dados pessoais obrigatórios com endereço, empresa e cargo; limite de 5 e-mails; exclusão de conta sem exportação; filiação binária; voluntário como marcação simples; remoção de US-02.03 e US-02.06 e renumeração | Vitor Leonardo | Nome do revisor |
-| 1.2 | 11/09/2026 | Link do LinkedIn (opcional) em US-02.01; nova US-02.08 (exibir perfil em "Profissionais da comunidade", opt-in de Filiado) e renumeração das histórias de Admin para US-02.09 a US-02.12 | Vitor Leonardo | Nome do revisor |
-| 1.3 | 11/09/2026 | US-02.08: vitrine de profissionais passa a ser visível a todos os usuários (só Filiados aparecem) | Vitor Leonardo | Nome do revisor |
-| 1.4 | 11/09/2026 | US-02.04: critério de desativação da gamificação alinhado ao ÉP-08 (sem ranking) | Vitor Leonardo | Nome do revisor |
+| 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-02 (Meu Perfil) para Não-Filiado, Filiado e Admin | Vitor Leonardo | Anne de Capdeville |
+| 1.1 | 11/09/2026 | Atores movidos para perfil-usuario.md; remoção de origem/dependências; dados pessoais obrigatórios com endereço, empresa e cargo; limite de 5 e-mails; exclusão de conta sem exportação; filiação binária; voluntário como marcação simples; remoção de US-02.03 e US-02.06 e renumeração | Vitor Leonardo | Anne de Capdeville |
+| 1.2 | 11/09/2026 | Link do LinkedIn (opcional) em US-02.01; nova US-02.08 (exibir perfil em "Profissionais da comunidade", opt-in de Filiado) e renumeração das histórias de Admin para US-02.09 a US-02.12 | Vitor Leonardo | Anne de Capdeville |
+| 1.3 | 11/09/2026 | US-02.08: vitrine de profissionais passa a ser visível a todos os usuários (só Filiados aparecem) | Vitor Leonardo | Anne de Capdeville |
+| 1.4 | 11/09/2026 | US-02.04: critério de desativação da gamificação alinhado ao ÉP-08 (sem ranking) | Vitor Leonardo | Anne de Capdeville |
