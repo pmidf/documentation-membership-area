@@ -15,6 +15,7 @@ nav:
       - Histórias de Usuário (V.1): planejamento/historias-usuario-v1.md
       - Protótipos (v0, v1 e v2): planejamento/prototipos.md
   - Épicos e Histórias:
+      - ÉP-01 — Autenticação e Validação de Filiação: epicos-historias/autenticacao.md
       - ÉP-02 — Meu Perfil: epicos-historias/meu-perfil.md
       - ÉP-04 — Clube de Benefícios: epicos-historias/clube-beneficios.md
       - ÉP-05 — Agenda do PMI-DF: epicos-historias/agenda.md

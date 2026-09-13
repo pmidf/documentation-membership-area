@@ -15,7 +15,8 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 | Recurso | Não-Filiado | Filiado | Admin |
 |---------|:-----------:|:-------:|:-----:|
 | Próprios dados pessoais | E | E | E |
-| Próprios campos sincronizados do PMI (nome, PMI ID) | — | L | L |
+| Próprios campos sincronizados do PMI (nome, PMI ID, expiração) | — | L | L |
+| Atualizar a própria situação de filiação (consultar o PMI) | E | E | E |
 | Própria foto e mini bio | E | E | E |
 | Próprios e-mails alternativos (Sympla) | E | E | E |
 | Próprias preferências (gamificação, e-mail marketing) | E | E | E |
@@ -36,7 +37,7 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 | [US-02.03](#us-0203-cadastrar-e-verificar-meus-e-mails-alternativos-do-sympla) | Cadastrar e verificar meus e-mails alternativos do Sympla | Filiado, Não-Filiado | Must |
 | [US-02.04](#us-0204-definir-minhas-preferencias-de-gamificacao-e-e-mail-marketing) | Definir minhas preferências de gamificação e e-mail marketing | Filiado, Não-Filiado | Must |
 | [US-02.05](#us-0205-excluir-minha-conta) | Excluir minha conta | Filiado, Não-Filiado | Must |
-| [US-02.06](#us-0206-consultar-meu-status-de-filiacao-e-iniciar-a-validacao) | Consultar meu status de filiação e iniciar a validação | Não-Filiado | Must |
+| [US-02.06](#us-0206-consultar-e-atualizar-minha-situacao-de-filiacao) | Consultar e atualizar minha situação de filiação | Não-Filiado | Must |
 | [US-02.07](#us-0207-visualizar-meus-dados-de-filiacao-sincronizados-do-pmi) | Visualizar meus dados de filiação sincronizados do PMI | Filiado | Must |
 | [US-02.08](#us-0208-exibir-meu-perfil-em-profissionais-da-comunidade) | Exibir meu perfil em "Profissionais da comunidade" | Filiado | Should |
 | [US-02.09](#us-0209-listar-buscar-filtrar-e-exportar-pessoas) | Listar, buscar, filtrar e exportar pessoas | Admin | Must |
@@ -64,13 +65,13 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 2. **Dado** que altero telefone, endereço, escolaridade, data de nascimento, gênero, empresa, cargo ou LinkedIn e salvo, **quando** a operação conclui, **então** os dados são persistidos e recebo confirmação visual.
 3. **Dado** que altero o e-mail principal, **quando** salvo, **então** o novo endereço entra como *pendente* e só se torna efetivo após verificação; o e-mail antigo recebe aviso da tentativa de troca.
 4. **Dado** que deixo qualquer campo obrigatório em branco, **quando** salvo, **então** vejo a indicação do campo e nada é persistido.
-5. **Dado** que informo dado inválido (telefone fora do padrão, CEP inexistente, data futura, URL que não é do LinkedIn), **quando** salvo, **então** vejo a mensagem de erro junto ao campo e nada é persistido.
+5. **Dado** que informo dado inválido (telefone fora do padrão, CEP inexistente, data de nascimento futura ou que resulte em idade inferior a 18 anos, URL que não é do LinkedIn), **quando** salvo, **então** vejo a mensagem de erro junto ao campo e nada é persistido.
 6. **Dado** que informo o CEP, **quando** saio do campo, **então** logradouro, bairro, cidade e UF são preenchidos automaticamente, permanecendo editáveis.
 7. **Dado** que respondi (ou pulei) o onboarding, **quando** acesso "Meu perfil", **então** consigo rever e editar interesse e momento de carreira.
 
 **Regras de negócio**
 
-- RN-02.01.1 — Todos os dados pessoais listados no critério 1 são **obrigatórios**, exceto o link do LinkedIn, que é opcional e deve apontar para `linkedin.com/in/`.
+- RN-02.01.1 — Todos os dados pessoais listados no critério 1 são **obrigatórios**, exceto o link do LinkedIn, que é opcional e deve apontar para `linkedin.com/in/`. São exigidos já no cadastro (ÉP-01, US-01.01); idade mínima de 18 anos (ÉP-01, RN-01.01.2).
 - RN-02.01.2 — Toda alteração de dados pessoais gera registro de auditoria.
 - RN-02.01.3 — Para o Filiado, `nome` e `PMI ID` são somente leitura (ver US-02.07).
 - RN-02.01.4 — O e-mail principal é a chave de login e pode ser alterado; a troca só se efetiva após verificação do novo endereço.
@@ -176,26 +177,32 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 ## 3. Histórias do Não-Filiado
 
-### US-02.06 — Consultar meu status de filiação e iniciar a validação
+### US-02.06 — Consultar e atualizar minha situação de filiação
 
 **Atores:** Não-Filiado
 
-> **Como** Não-Filiado
-> **Quero** ver claramente no meu perfil que ainda não sou filiado e o que preciso fazer para ser reconhecido como tal
-> **Para** desbloquear o conteúdo exclusivo se eu já for, ou entender o valor de me filiar se ainda não for
+> **Como** Não-Filiado — que criou a conta sem ser filiado e me filiei depois, que está com a vinculação pendente ou cuja filiação venceu e foi renovada
+> **Quero** ver claramente no meu perfil qual é a minha situação e poder atualizá-la a qualquer momento
+> **Para** ter meu acesso de Filiado liberado assim que o PMI reconhecer minha filiação, sem precisar de suporte
 
 **Critérios de aceite**
 
-1. **Dado** que não tenho filiação validada, **quando** acesso "Meu perfil", **então** vejo o status "Não filiado" com dois caminhos: "Já sou filiado — informar meu PMI ID" e "Quero me filiar".
-2. **Dado** que escolho "Já sou filiado", **quando** informo meu PMI ID, **então** sou conduzido ao fluxo de validação de filiação do ÉP-01 e, ao retornar, o status no perfil reflete o resultado (`ATIVO`, `PENDENTE_VALIDACAO` ou `NAO_FILIADO`).
-3. **Dado** que meu status é `PENDENTE_VALIDACAO`, **quando** acesso o perfil, **então** vejo a data da solicitação e a informação de que a sincronização com a base do PMI pode levar alguns dias.
-4. **Dado** que minha filiação deixou de ser reconhecida, **quando** acesso o perfil, **então** vejo o aviso de que o acesso exclusivo foi suspenso e o link para renovar no site do PMI.
-5. **Dado** que escolho "Quero me filiar", **quando** clico, **então** sou direcionado à jornada de conversão sem sair da plataforma.
+1. **Dado** que acesso "Meu perfil > Filiação PMI", **quando** a página carrega, **então** vejo minha situação atual em linguagem clara — "Não vinculado", "Aguardando localização na base do PMI", "Aguardando confirmação do código" ou "Filiação vencida em dd/mm" — e o botão **"Atualizar situação"**, além do link "Quero me filiar".
+2. **Dado** que nunca informei meu PMI ID, **quando** clico em "Atualizar situação", **então** abre o formulário de PMI ID e e-mail do PMI (ÉP-01, US-01.07) e, ao retornar, a seção reflete o resultado.
+3. **Dado** que estou com a vinculação pendente, **quando** vejo a seção, **então** vejo o PMI ID informado, a data da solicitação, a data/hora da última verificação e o motivo (não localizado ou PMI indisponível); "Atualizar situação" repete a consulta ao PMI, com opção de corrigir os dados (ÉP-01, US-01.09).
+4. **Dado** que estou aguardando o código do e-mail do PMI, **quando** clico em "Atualizar situação", **então** retomo a tela do código (ÉP-01, US-01.08).
+5. **Dado** que minha filiação venceu e eu já renovei no PMI, **quando** clico em "Atualizar situação", **então** a plataforma reconsulta o PMI e, se a filiação estiver ativa, recupero o acesso de Filiado na hora, sem novo código (ÉP-01, US-01.11).
+6. **Dado** que minha filiação venceu e ainda não renovei, **quando** acesso a seção, **então** vejo o aviso de que o acesso exclusivo foi suspenso, a data do vencimento e o link para renovar no site do PMI, seguido de "Atualizar situação".
+7. **Dado** que usei "Atualizar situação" há menos de 10 minutos, **quando** clico de novo, **então** vejo o tempo restante e nenhuma consulta é feita.
+8. **Dado** que estou pendente há mais de 1 dia, **quando** acesso a seção, **então** vejo a opção de enviar comprovante para análise manual (ÉP-01, US-01.10).
+9. **Dado** que escolho "Quero me filiar", **quando** clico, **então** sou direcionado à jornada de conversão sem sair da plataforma.
 
 **Regras de negócio**
 
-- RN-02.06.1 — O perfil apenas **exibe** o status e encaminha; a validação em si (consulta à base do PMI, código de confirmação, análise manual) pertence ao ÉP-01.
+- RN-02.06.1 — O perfil apenas **exibe** a situação e encaminha; a validação em si (consulta à base do PMI, código de confirmação, análise manual) pertence ao ÉP-01, que define os status `SEM_VINCULO`, `PENDENTE`, `AGUARDANDO_CODIGO`, `APROVADO`, `EXPIRADO` e `CONCEDIDO_MANUALMENTE`.
 - RN-02.06.2 — A mensagem para PMI ID não encontrado nunca afirma que a pessoa "não é filiada"; informa apenas que o vínculo ainda não foi confirmado.
+- RN-02.06.3 — "Atualizar situação" consulta o PMI no máximo 1 vez a cada 10 minutos por pessoa (ÉP-01, RN-01.09.2).
+- RN-02.06.4 — Enquanto a situação não for `APROVADO` ou `CONCEDIDO_MANUALMENTE`, a pessoa tem exatamente o acesso de Não-Filiado.
 
 ---
 
@@ -211,16 +218,18 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 **Critérios de aceite**
 
-1. **Dado** que minha filiação está ativa, **quando** acesso "Meu perfil", **então** vejo o selo "Filiado PMI-DF", meu PMI ID e a data da última sincronização com a base do PMI.
+1. **Dado** que minha filiação está ativa, **quando** acesso "Meu perfil > Filiação PMI", **então** vejo o selo "Filiado PMI-DF", meu PMI ID, a **data de expiração** da filiação, a data/hora da última verificação na base do PMI e o botão "Atualizar situação".
 2. **Dado** que sou Filiado, **quando** tento editar `nome` ou `PMI ID`, **então** os campos aparecem em modo leitura com a nota "Dado sincronizado da base do PMI — para corrigir, atualize seu cadastro no PMI Global".
-3. **Dado** que minha filiação foi concedida manualmente pelo Admin, **quando** acesso o perfil, **então** o selo é exibido da mesma forma que para qualquer outro filiado.
-4. **Dado** que a sincronização deixa de reconhecer minha filiação, **quando** acesso a plataforma, **então** meu perfil volta a exibir o estado descrito em US-02.06 (critério 4) e recebo e-mail transacional informando a mudança.
+3. **Dado** que minha filiação foi concedida manualmente pelo Admin, **quando** acesso o perfil, **então** o selo é exibido da mesma forma que para qualquer outro filiado, sem data de expiração.
+4. **Dado** que estou a 30 dias ou menos do vencimento, **quando** acesso a plataforma, **então** vejo o lembrete "Sua filiação vence em dd/mm — renove no PMI para não perder o acesso" (ÉP-01, US-01.11).
+5. **Dado** que a revalidação deixa de reconhecer minha filiação, **quando** acesso a plataforma, **então** perco o acesso de Filiado imediatamente, meu perfil passa a exibir o estado descrito em US-02.06 (critério 6) e recebo e-mail transacional informando a mudança.
+6. **Dado** que clico em "Atualizar situação" com a filiação ativa, **quando** a consulta conclui, **então** a data de expiração e a última verificação são atualizadas.
 
 **Regras de negócio**
 
-- RN-02.07.1 — Campos originados da base do PMI são somente leitura na aplicação, para evitar divergência com a fonte de verdade.
-- RN-02.07.2 — Por enquanto a plataforma informa apenas **se** a pessoa é filiada; não exibe datas de início ou expiração da filiação.
-- RN-02.07.3 — A renovação acontece no PMI Global; a plataforma apenas reflete o resultado na próxima sincronização.
+- RN-02.07.1 — Campos originados da base do PMI (nome, PMI ID, data de expiração) são somente leitura na aplicação, para evitar divergência com a fonte de verdade.
+- RN-02.07.2 — A data de expiração exibida é a informada pelo PMI na última verificação; a plataforma não exibe a data de início da filiação enquanto a base do PMI não a fornecer (ÉP-01, questão 4).
+- RN-02.07.3 — A renovação acontece no PMI Global; a plataforma reflete o resultado na próxima revalidação (login) ou quando a pessoa usa "Atualizar situação". **Não há carência**: vencida a filiação, o acesso de Filiado é suspenso.
 
 ---
 
@@ -345,9 +354,10 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 ### Decisões
 
-- **Todos os dados pessoais são obrigatórios** (nome, e-mail, telefone, endereço completo, escolaridade, data de nascimento, gênero, empresa e cargo).
+- **Todos os dados pessoais são obrigatórios** (nome, e-mail, telefone, endereço completo, escolaridade, data de nascimento, gênero, empresa e cargo) e são exigidos **já no cadastro** (ÉP-01, US-01.01); idade mínima de 18 anos.
 - **Aprovação manual de cadastro** não existe neste épico: qualquer pessoa cria conta e entra como Não-Filiado; o Admin intervém apenas para conceder filiação ou marcar voluntário.
-- **Filiação é binária por enquanto**: a plataforma informa se a pessoa é ou não filiada, sem datas de início ou expiração.
+- **"Atualizar situação" é o caminho de quem se filiou depois de criar a conta** (ou renovou após vencer): o perfil exibe a situação e o botão; a consulta ao PMI, o código e a análise manual são do ÉP-01.
+- **Filiação tem data de expiração**, informada pelo PMI e exibida no perfil; **não há carência** — vencida a filiação, o acesso de Filiado é suspenso até a renovação ser reconhecida. A data de início continua fora enquanto a base do PMI não a fornecer.
 - **Voluntário é uma marcação simples** (sim/não), sem cargo, diretoria ou histórico de vínculos.
 - **Sem exportação de dados pelo próprio usuário**: o perfil oferece apenas a exclusão da conta.
 - **Sem sinal "aberto a oportunidades".** A única exposição do perfil a terceiros é a vitrine "Profissionais da comunidade" (ÉP-07): *opt-in*, visível a todos os usuários, onde só Filiados aparecem, limitada a dados profissionais (US-02.08).
@@ -355,10 +365,9 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 ### Questões em aberto
 
-1. Os dados obrigatórios (endereço, empresa, cargo etc.) são exigidos já no cadastro (ÉP-01) ou a conta pode ser criada só com nome/e-mail/senha e o preenchimento completado depois em "Meu perfil"? Se for a segunda opção, o que fica bloqueado enquanto o perfil está incompleto?
-2. A troca de e-mail principal deve ser bloqueada para Filiados enquanto o e-mail for a chave de reconciliação com a base do PMI?
-3. A sincronização com o ThoughtSpot traz data de expiração da filiação? Se trouxer, a RN-02.07.2 pode ser revista para exibir vigência e alertas.
-4. O Admin pode alterar o e-mail principal de uma pessoa (US-02.10)? Se sim, exige verificação do novo endereço como em US-02.01?
+1. A troca de e-mail principal deve ser bloqueada para Filiados enquanto o e-mail for a chave de reconciliação com a base do PMI? (No ÉP-01 a posse do e-mail do PMI é comprovada por código e ele vira e-mail alternativo verificado, então a troca do e-mail principal não afeta o vínculo — confirmar.)
+2. A base do PMI traz a data de **início** da filiação? Se trouxer, a RN-02.07.2 pode ser revista para exibi-la e o badge "Filiado há N anos" (ÉP-08) passa a usar a data real.
+3. O Admin pode alterar o e-mail principal de uma pessoa (US-02.10)? Se sim, exige verificação do novo endereço como em US-02.01?
 
 ---
 
@@ -371,3 +380,4 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 | 1.2 | 11/09/2026 | Link do LinkedIn (opcional) em US-02.01; nova US-02.08 (exibir perfil em "Profissionais da comunidade", opt-in de Filiado) e renumeração das histórias de Admin para US-02.09 a US-02.12 | Vitor Leonardo | Anne de Capdeville |
 | 1.3 | 11/09/2026 | US-02.08: vitrine de profissionais passa a ser visível a todos os usuários (só Filiados aparecem) | Vitor Leonardo | Anne de Capdeville |
 | 1.4 | 11/09/2026 | US-02.04: critério de desativação da gamificação alinhado ao ÉP-08 (sem ranking) | Vitor Leonardo | Anne de Capdeville |
+| 1.5 | 13/09/2026 | Alinhamento com o ÉP-01: US-02.06 reescrita como "Consultar e atualizar minha situação de filiação" (botão "Atualizar situação" por status); US-02.07 passa a exibir data de expiração, lembrete de vencimento e suspensão imediata sem carência; idade mínima de 18 anos; dados obrigatórios exigidos no cadastro; questões 1 e 3 resolvidas | Vitor Leonardo | Nome do revisor |
