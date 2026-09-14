@@ -23,7 +23,7 @@
    - [ÉP-05 — Agenda de Eventos e Trilha de Participação](#ép-05--agenda-de-eventos-e-trilha-de-participação)
    - [ÉP-06 — Hub de Conteúdo Exclusivo e Conhecimento PMI](#ép-06--hub-de-conteúdo-exclusivo-e-conhecimento-pmi)
    - [ÉP-07 — Vitrine de Oportunidades de Carreira](#ép-07--vitrine-de-oportunidades-de-carreira)
-   - [ÉP-08 — Reconhecimento: Badges e Ranking de Engajamento](#ép-08--reconhecimento-badges-e-ranking-de-engajamento)
+   - [ÉP-08 — Gamificação](#ép-08--gamificação)
    - [ÉP-09 — Experiência Freemium e Conversão para Filiação](#ép-09--experiência-freemium-e-conversão-para-filiação)
    - [ÉP-10 — Console Administrativo, Auditoria e LGPD](#ép-10--console-administrativo-auditoria-e-lgpd)
 8. [Matriz consolidada de CRUDs](#8-matriz-consolidada-de-cruds)
@@ -58,9 +58,9 @@
 
 ### 1.3 Escopo do MVP (proposta)
 
-**Dentro:** cadastro/login, validação de filiação, perfil, bloqueio freemium, clube de benefícios, agenda de eventos com sincronização Sympla, hub de conteúdo, vitrine de vagas, badges por tempo de filiação, console administrativo.
+**Dentro:** cadastro/login, validação de filiação, perfil, bloqueio freemium, clube de benefícios, agenda de eventos com sincronização Sympla, hub de conteúdo, vitrine de vagas, gamificação por quebra-cabeças colecionáveis, console administrativo.
 
-**Fora do MVP (backlog futuro):** ranking gamificado avançado, missões comemorativas com submissão manual, organograma público interativo, mentoria, fórum/comunidade, emissão de certificados de PDU.
+**Fora do MVP (backlog futuro):** badges, ranking de engajamento e loja de resgate de prêmios (avaliados e descartados do ÉP-08 na v2.0 — ver seção "Decisões" do épico), organograma público interativo, mentoria, fórum/comunidade, emissão de certificados de PDU.
 
 ---
 
@@ -73,21 +73,21 @@ Antes de escrever histórias, registro a leitura de produto sobre o material col
 - **A filiação já é o modelo de negócio.** A plataforma não precisa inventar monetização: ela precisa tornar visível o valor de algo que já é pago. Isso simplifica muito o produto — o "paywall" é uma consequência natural, não um artifício.
 - **A validação via base do PMI é o coração do sistema.** Ter uma fonte de verdade externa (PMI Global) evita que o capítulo mantenha manualmente um cadastro de filiação, que é o maior custo operacional desse tipo de plataforma.
 - **A escolha de integrar com Sympla em vez de construir gestão de inscrições** é acertada. O capítulo continua operando onde já opera e a plataforma vira a camada de identidade e histórico.
-- **Gamificação ancorada em fatos verificáveis** (tempo de filiação, presença em eventos) é mais sustentável que gamificação por pontos arbitrários.
+- **Gamificação ancorada em um fato verificável** (presença confirmada em eventos) é mais sustentável que gamificação por pontos arbitrários.
 
 ### 2.2 Pontos de atenção que exigem decisão
 
 | #   | Observação                                                                                                                                                      | Risco se ignorado                                                    | Recomendação                                                                                                                                                                                      |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A-1 | **"ATS de vagas" não é um ATS.** O requisito descreve um mural de vagas somente leitura, sem candidatura, funil ou triagem.                                     | Expectativa desalinhada com a diretoria; escopo inflado.             | Renomear para _Vitrine de Oportunidades_. Manter o modelo de dados preparado para receber candidatura em fase futura.                                                                             |
-| A-2 | **E-mails do Sympla informados pelo próprio usuário sem verificação.** Qualquer pessoa poderia declarar o e-mail de outra e herdar o histórico de participação. | Fraude no ranking de gamificação e vazamento de histórico alheio.    | Exigir verificação de posse (double opt-in) de todo e-mail alternativo antes de vinculá-lo a participações. **Bloqueante para o ÉP-08.**                                                          |
+| A-2 | **E-mails do Sympla informados pelo próprio usuário sem verificação.** Qualquer pessoa poderia declarar o e-mail de outra e herdar o histórico de participação. | Fraude nas conquistas de gamificação (créditos e peças) e vazamento de histórico alheio. | Exigir verificação de posse (double opt-in) de todo e-mail alternativo antes de vinculá-lo a participações. **Bloqueante para o ÉP-08.**                                                          |
 | A-3 | **A filiação expira.** O requisito trata "é filiado" como um estado binário permanente.                                                                         | Ex-filiados mantendo acesso a benefícios pagos.                      | Modelar filiação com `data_inicio`, `data_expiracao` e `status`, com job diário de reconciliação e downgrade automático.                                                                          |
 | A-4 | **Dados sensíveis coletados no cadastro** (gênero, data de nascimento, escolaridade, local de residência).                                                      | Exposição LGPD; abandono do cadastro por fricção.                    | Tornar opcionais os campos demográficos, com base legal de consentimento explícito e finalidade declarada. Só e-mail, senha e nome são obrigatórios no cadastro.                                  |
 | A-5 | **YouTube "privado" não é controle de acesso.** Vídeo não listado é acessível por qualquer pessoa com a URL.                                                    | Conteúdo exclusivo vazando para não filiados.                        | Nunca expor a URL no HTML/API para não filiados. Servir via endpoint autorizado que retorna o embed apenas para sessão de filiado, com `origin` restrito. Aceitar que é mitigação, não blindagem. |
-| A-6 | **Badge por tempo de filiação depende do histórico do PMI.** Se a API só retorna o status atual, não há como calcular 5 ou 10 anos.                             | Badges de marco impossíveis de conceder automaticamente.             | Confirmar se o relatório do PMI traz `member since`. Se não trouxer, prever concessão manual pelo admin como fallback.                                                                            |
+| A-6 | ~~Badge por tempo de filiação depende do histórico do PMI.~~ **Resolvido na v2.0 do ÉP-08**: badges foram removidos do escopo; a gamificação não depende mais de `member_since`.               | — (não se aplica mais)                                                | —                                                                                                                                                   |
 | A-7 | **Freemium sem prévia real não converte.** Bloquear a página inteira com um cadeado gera frustração, não desejo.                                                | Baixa conversão, contradizendo o OB-1.                               | Mostrar título, imagem e primeiras linhas de cada item, borrando apenas o valor final (código do cupom, vídeo, texto de resgate).                                                                 |
 | A-8 | **"Admin" como papel único e absoluto.** Um único nível de administrador com poder de editar tudo em uma organização com dezenas de voluntários rotativos.      | Erro operacional e ausência de rastreabilidade nas trocas de gestão. | Modelar papéis administrativos granulares (Editor de Conteúdo, Gestor de Eventos, Super Admin) desde o modelo de dados, mesmo que a UI do MVP só exponha um perfil.                               |
-| A-9 | **Ranking público de participação.** Expor nomes em ranking é tratamento de dado pessoal com potencial de constrangimento.                                      | Reclamações e pedidos de remoção.                                    | Participação no ranking é _opt-in_ (já previsto no requisito de perfil) e o opt-out deve remover o usuário da exibição, não apenas parar de pontuar.                                              |
+| A-9 | ~~Ranking público de participação.~~ **Resolvido na v2.0 do ÉP-08**: o ranking foi removido do escopo; não há mais exibição pública de posição ou pontuação.        | — (não se aplica mais)                                                | —                                                                                                                                                   |
 
 ### 2.3 Decisão de arquitetura de produto derivada da análise
 
@@ -131,8 +131,7 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 | Player de vídeo exclusivo            |     —     |   —    |    L    |        E        |
 | Links curados PMI Global             |     P     |   P    |    L    |        E        |
 | Vitrine de vagas                     |     L     |   L    |    L    |        E        |
-| Badges próprios                      |     —     |   —    |    L    |        E        |
-| Ranking de engajamento               |     —     |   L    |    L    |        E        |
+| Gamificação (quebra-cabeças e créditos próprios) |     —     |   —    |    L    |        E        |
 | Organograma                          |     L     |   L    |    L    |        E        |
 | Console administrativo               |     —     |   —    |    —    |        E        |
 | Trilha de auditoria                  |     —     |   —    |    —    | L (Super Admin) |
@@ -154,7 +153,7 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 ┌──────────────────────────┴───────────────────────────────────┐
 │                        API BACKEND                           │
 │  Auth │ Perfil │ Benefícios │ Eventos │ Conteúdo │ Vagas │   │
-│  Badges │ Organograma │ Admin │ Auditoria                    │
+│  Gamificação │ Organograma │ Admin │ Auditoria                │
 ├──────────────────────────────────────────────────────────────┤
 │         CAMADA DE INTEGRAÇÃO (adapters + filas)              │
 │  ThoughtSpot/PMI │ Sympla │ Google OAuth │ SMTP │ Storage    │
@@ -233,10 +232,10 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 
 #### Gamificação
 
-**`badge`**: `id`, `nome`, `descricao`, `criterio_texto`, `imagem_url`, `tipo` (`MARCO_FILIACAO`, `COMEMORATIVO`, `VOLUNTARIADO`, `PARTICIPACAO`), `modo_concessao` (`AUTOMATICO`, `SUBMISSAO_MANUAL`), `regra_json`, `exige_evidencia`, `instrucao_evidencia`, `vigencia_inicio`, `vigencia_fim`, `status`.
-**`badge_concedido`**: `id`, `badge_id`, `pessoa_id`, `concedido_em`, `origem` (`AUTOMATICO`, `APROVACAO_ADMIN`), `concedido_por`, `submissao_id`. Único por (`badge_id`, `pessoa_id`).
-**`submissao_badge`**: `id`, `badge_id`, `pessoa_id`, `texto_submissao`, `arquivo_url`, `url_evidencia`, `status` (`PENDENTE`, `EM_ANALISE`, `APROVADA`, `REPROVADA`), `avaliado_por`, `avaliado_em`, `justificativa_avaliacao`.
-**`pontuacao_engajamento`**: `id`, `pessoa_id`, `periodo` (ex.: `2026`), `pontos`, `eventos_participados`, `atualizado_em`.
+**`quebra_cabeca`**: `id`, `nome`, `legenda`, `historia_curta`, `imagem_url`, `proporcao` (fixa `4:2`), `grid` (fixo `2x4`, 8 peças), `silhueta_url`, `status` (`RASCUNHO`, `PUBLICADO`, `ARQUIVADO`).
+**`progresso_quebra_cabeca`**: `id`, `quebra_cabeca_id`, `pessoa_id`, `pecas_obtidas` (0 a 8), `status` (`EM_ANDAMENTO`, `CONCLUIDO`), `iniciado_em`, `concluido_em`. **No máximo uma linha `EM_ANDAMENTO` por `pessoa_id`** (constraint).
+**`peca_conquistada`**: `id`, `quebra_cabeca_id`, `pessoa_id`, `indice` (0 a 7), `participacao_evento_id`, `conquistada_em`. Único por (`pessoa_id`, `quebra_cabeca_id`, `indice`).
+**`creditos_gamificacao`**: `id`, `pessoa_id` UNIQUE, `saldo`, `atualizado_em`. Incrementado por `ParticipacaoConfirmada`; decrementado quando um crédito é trocado por uma peça (US-08.04).
 
 #### Transversal
 
@@ -251,7 +250,7 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 
 ### 5.1 PMI Global via ThoughtSpot — validação de filiação
 
-**Finalidade:** confirmar se a pessoa possui filiação ativa no PMI e obter a data de início da filiação (necessária para os badges de marco).
+**Finalidade:** confirmar se a pessoa possui filiação ativa no PMI e obter a data de início da filiação.
 
 **Padrão de integração:** o ThoughtSpot é uma plataforma de analytics, não um serviço de identidade. Ele expõe dados de um _liveboard_/_answer_ pré-construído com a lista de filiados do capítulo. A integração portanto é de **consulta a relatório**, não de autenticação.
 
@@ -290,7 +289,7 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 
 ### 5.2 Sympla — eventos e participantes
 
-**Finalidade:** popular a agenda automaticamente e alimentar o histórico de participação e o ranking.
+**Finalidade:** popular a agenda automaticamente e alimentar o histórico de participação e os créditos de gamificação.
 
 **Autenticação:** token de API do organizador enviado em header (`s_token`). Guardar em cofre de segredos, nunca no código ou no frontend.
 
@@ -300,7 +299,7 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 | ----------------------------- | ---------------------------------------------------------------------- | ------------------------------------ |
 | Listar eventos do organizador | `GET https://api.sympla.com.br/public/v4/events?published=true&page=N` | Sincronizar agenda                   |
 | Detalhe do evento             | `GET /public/v4/events/{event_id}`                                     | Enriquecer dados                     |
-| Listar participantes          | `GET /public/v4/events/{event_id}/participants?page=N`                 | Histórico e pontuação                |
+| Listar participantes          | `GET /public/v4/events/{event_id}/participants?page=N`                 | Histórico e créditos de gamificação  |
 | Listar pedidos                | `GET /public/v4/events/{event_id}/orders`                              | Conciliação financeira (fora do MVP) |
 
 **Job de sincronização:**
@@ -318,7 +317,7 @@ Algoritmo de participantes:
       pessoa_id ← pessoa?.id (pode ser null → fica órfã para conciliação manual)
       status_presenca ← mapear(participante.checkin_status)
     se pessoa_id preenchido e status = CHECKIN → publicar evento de domínio
-       ParticipacaoConfirmada → consumidor recalcula pontuacao_engajamento
+       ParticipacaoConfirmada → consumidor credita 1 em creditos_gamificacao (ÉP-08)
 ```
 
 **Regras críticas:**
@@ -356,7 +355,7 @@ Algoritmo de participantes:
 | ÉP-05 | Calendário/Agenda de eventos | **Agenda de Eventos e Trilha de Participação**      | Incorpora o histórico, que é o ativo de maior valor (alimenta gamificação e prova de engajamento).                        |
 | ÉP-06 | Área de conteúdo exclusivo   | **Hub de Conteúdo Exclusivo e Conhecimento PMI**    | "Hub" comunica a centralização (conteúdo próprio + redirecionamento ao PMI Global).                                       |
 | ÉP-07 | ATS de vagas                 | **Vitrine de Oportunidades de Carreira**            | Corrige a expectativa: não há funil de recrutamento, é um mural curado (ver A-1).                                         |
-| ÉP-08 | Gamificação                  | **Reconhecimento: Badges e Ranking de Engajamento** | "Reconhecimento" comunica o propósito; "gamificação" é o meio, não o fim.                                                 |
+| ÉP-08 | Gamificação                  | **Gamificação: Quebra-cabeças por Crédito**         | v2.0: badges e ranking foram removidos do escopo; a mecânica única é o quebra-cabeça colecionável, sorteado por crédito de presença em eventos.                            |
 | ÉP-09 | _(novo)_                     | **Experiência Freemium e Conversão para Filiação**  | O bloqueio freemium aparecia diluído em vários requisitos. É um mecanismo transversal com KPI próprio (OB-1).             |
 | ÉP-10 | _(novo)_                     | **Console Administrativo, Auditoria e LGPD**        | Os CRUDs administrativos e a conformidade legal precisam de espaço próprio no backlog, senão viram dívida.                |
 
@@ -526,7 +525,7 @@ Algoritmo de participantes:
 **Critérios de aceite**
 
 - **Dado** que me cadastrei, **quando** clico no link do e-mail em até 72h, **então** `email_verificado_em` é preenchido e ganho acesso completo ao meu nível.
-- **Dado** que não verifiquei, **quando** tento resgatar benefício, submeter badge ou vincular e-mail Sympla, **então** sou bloqueado com CTA para reenviar a verificação.
+- **Dado** que não verifiquei, **quando** tento resgatar benefício, sortear uma peça de gamificação ou vincular e-mail Sympla, **então** sou bloqueado com CTA para reenviar a verificação.
 
 **Notas técnicas**
 
@@ -547,7 +546,7 @@ Algoritmo de participantes:
 
 - **Dado** que o job roda às 03:00, **quando** conclui, **então** todas as pessoas com `pmi_id` têm `filiacao_validada_em` atualizado e o resumo é registrado.
 - **Dado** que um filiado consta como expirado na base do PMI, **quando** o job processa, **então** seu status vira `EXPIRADO`, ele perde acesso exclusivo e recebe e-mail com orientação de renovação.
-- **Dado** que uma pessoa `PENDENTE_VALIDACAO` é encontrada como ativa, **quando** o job processa, **então** vira `ATIVO`, recebe e-mail de boas-vindas e dispara a concessão do badge de filiação.
+- **Dado** que uma pessoa `PENDENTE_VALIDACAO` é encontrada como ativa, **quando** o job processa, **então** vira `ATIVO` e recebe e-mail de boas-vindas.
 - **Dado** que a integração falha, **quando** o job executa, **então** **nenhum** status é rebaixado, o erro é registrado e o admin é notificado.
 
 **Regras de negócio**
@@ -668,11 +667,11 @@ Algoritmo de participantes:
 - **Dado** que informo um e-mail alternativo, **quando** salvo, **então** ele fica com status "aguardando verificação" e um e-mail de confirmação é enviado ao endereço informado.
 - **Dado** que clico no link de confirmação, **quando** o token é válido, **então** o e-mail é marcado como verificado e as participações históricas com aquele endereço são vinculadas retroativamente ao meu perfil.
 - **Dado** que informo um e-mail já verificado por outra pessoa, **quando** salvo, **então** a operação é recusada com orientação de contato ao suporte.
-- **Dado** que removo um e-mail alternativo, **quando** confirmo, **então** as participações associadas voltam ao estado não vinculado e minha pontuação é recalculada.
+- **Dado** que removo um e-mail alternativo, **quando** confirmo, **então** as participações associadas voltam ao estado não vinculado e meus créditos de gamificação são recalculados.
 
 **Regras de negócio**
 
-- RN-02.04.1 — **E-mail não verificado nunca gera vínculo de participação nem pontuação.** (Mitigação do risco A-2.)
+- RN-02.04.1 — **E-mail não verificado nunca gera vínculo de participação nem crédito de gamificação.** (Mitigação do risco A-2.)
 - RN-02.04.2 — Máximo de 3 e-mails alternativos por pessoa.
 - RN-02.04.3 — Um e-mail verificado é exclusivo de uma pessoa em toda a base.
 
@@ -680,7 +679,7 @@ Algoritmo de participantes:
 
 - `POST /api/perfil/emails`, `GET /api/perfil/emails`, `DELETE /api/perfil/emails/{id}`, `POST /api/perfil/emails/{id}/reenviar-verificacao`.
 - Ao verificar, disparar job `VincularParticipacoesOrfas(email)`.
-- Ao remover, disparar `DesvincularParticipacoes(email)` + `RecalcularPontuacao(pessoa_id)`.
+- Ao remover, disparar `DesvincularParticipacoes(email)` + `RecalcularCreditosGamificacao(pessoa_id)`.
 
 **CRUD completo:** Create · Read · Update (status) · Delete
 
@@ -697,7 +696,7 @@ Algoritmo de participantes:
 **Critérios de aceite**
 
 - **Dado** que estou em "Preferências", **quando** ativo/desativo cada opção, **então** a escolha é salva com data e hora e registrada como consentimento.
-- **Dado** que desativo a gamificação, **quando** salvo, **então** meu nome deixa de aparecer no ranking público, embora meus badges já conquistados permaneçam no meu perfil privado.
+- **Dado** que desativo a gamificação, **quando** salvo, **então** paro de ganhar créditos por presença em eventos, mas meus créditos, peças e quebra-cabeças já conquistados continuam guardados no meu perfil.
 - **Dado** que desativo e-mail marketing, **quando** salvo, **então** deixo de receber comunicações promocionais, mas continuo recebendo e-mails transacionais (segurança, filiação, resgates).
 
 **Regras de negócio**
@@ -812,12 +811,10 @@ Algoritmo de participantes:
 
 - RN-03.02.1 — Ser voluntário é independente de ser filiado (voluntários podem não ser filiados).
 - RN-03.02.2 — `data_fim` nula significa vínculo ativo.
-- RN-03.02.3 — A designação dispara a avaliação do badge de voluntariado (ÉP-08).
 
 **Notas técnicas**
 
 - `POST /api/admin/pessoas/{id}/vinculos`, `PATCH /api/admin/vinculos/{id}` (encerrar), `GET /api/admin/vinculos?gestao=`.
-- Evento de domínio `VoluntarioDesignado` consumido pelo módulo de badges.
 
 **Dependências:** US-03.01, US-02.06 · **Prioridade:** Should · **Estimativa:** 8 SP
 
@@ -1051,7 +1048,7 @@ Algoritmo de participantes:
 
 **Regras de negócio**
 
-- RN-05.04.1 — Só participação com `status_presenca = CHECKIN` gera pontuação de engajamento. Inscrever-se e não comparecer não pontua.
+- RN-05.04.1 — Só participação com `status_presenca = CHECKIN` gera crédito de gamificação (ÉP-08). Inscrever-se e não comparecer não gera crédito.
 - RN-05.04.2 — Vínculo por e-mail não verificado é proibido (RN-02.04.1).
 
 **Notas técnicas**
@@ -1073,7 +1070,7 @@ Algoritmo de participantes:
 - **Dado** que acesso "Minha trilha", **quando** a página carrega, **então** vejo os eventos que participei em ordem cronológica decrescente, com título, data e formato.
 - **Dado** que nunca participei de nenhum evento, **quando** acesso, **então** vejo um estado vazio com convite para a agenda e orientação sobre cadastrar e-mails alternativos.
 - **Dado** que verifico um e-mail alternativo, **quando** volto à trilha, **então** as participações antigas com aquele e-mail já aparecem.
-- **Dado** que sou filiado com gamificação ativa, **quando** acesso, **então** também vejo minha pontuação e posição no ranking.
+- **Dado** que sou filiado com gamificação ativa, **quando** acesso, **então** também vejo um atalho para a aba "Gamificação", com meu saldo de créditos e o quebra-cabeça em andamento.
 
 **Notas técnicas**
 
@@ -1287,164 +1284,180 @@ Algoritmo de participantes:
 
 ---
 
-### ÉP-08 — Reconhecimento: Badges e Ranking de Engajamento
+### ÉP-08 — Gamificação
 
-**Objetivo:** reconhecer publicamente a fidelidade e a participação, criando um motivo emocional para permanecer filiado.
+> **v2.0 (13/09/2026):** quebra-cabeças colecionáveis de 8 peças, sorteados por crédito ganho a cada presença confirmada em evento. Detalhamento completo (fluxos, matriz de permissões, decisões e questões em aberto) em [`docs/epicos-historias/gamificacao.md`](../epicos-historias/gamificacao.md) — este backlog resume as mesmas histórias no formato do documento de produto.
 
-**Entidades:** `badge`, `badge_concedido`, `submissao_badge`, `pontuacao_engajamento`.
+**Objetivo:** reconhecer a participação em eventos por meio de uma coleção de quebra-cabeças, criando um motivo lúdico e recorrente para permanecer filiado e comparecer aos eventos do capítulo.
 
-#### US-08.01 — Admin: criar e manter badges
+**Entidades:** `quebra_cabeca`, `progresso_quebra_cabeca`, `peca_conquistada`, `creditos_gamificacao`.
+
+#### US-08.01 — Ver a aba de gamificação bloqueada
+
+> **Como** pessoa não filiada
+> **Quero** ver que existe uma coleção de quebra-cabeças para os filiados
+> **Para** entender o que ganho ao me filiar
+
+**Critérios de aceite**
+
+- **Dado** que sou Pessoa (não filiada), **quando** acesso "Meu perfil > Gamificação", **então** vejo o catálogo de quebra-cabeças com silhuetas desfocadas, o painel "Exclusivo para filiados" e o CTA "Quero ser filiado".
+- **Dado** que procuro o dado de sorteio, **quando** a tela carrega, **então** ele aparece desabilitado, com a dica "Disponível para filiados".
+- **Dado** que inspeciono a resposta da API, **quando** analiso o conteúdo, **então** recebo apenas a quantidade de quebra-cabeças no catálogo — nomes, legendas, histórias e imagens **não estão presentes**.
+
+**Regras de negócio**
+
+- RN-08.01.1 — Pessoa não filiada não acumula créditos nem peças.
+- RN-08.01.2 — Reutiliza o componente `<ConteudoBloqueado origem="gamificacao" />` (US-09.01).
+
+**Dependências:** US-09.01 · **Prioridade:** Should · **Estimativa:** 3 SP
+
+---
+
+#### US-08.02 — Ganhar crédito com presença confirmada em evento
+
+> **Como** filiado com gamificação ativa
+> **Quero** ganhar um crédito sempre que minha presença em um evento for confirmada
+> **Para** poder trocá-lo por peças de quebra-cabeça
+
+**Critérios de aceite**
+
+- **Dado** que minha presença em um evento é confirmada (`ParticipacaoConfirmada`, US-05.04), **quando** o fato é registrado, **então** ganho 1 crédito em até 1 minuto.
+- **Dado** que o mesmo check-in é reprocessado, **quando** o sistema avalia, **então** nenhum crédito é concedido em duplicidade.
+- **Dado** que minha filiação deixou de ser reconhecida ou desativei a gamificação, **quando** um check-in é confirmado, **então** nenhum crédito é concedido; os créditos já acumulados permanecem guardados.
+
+**Regras de negócio**
+
+- RN-08.02.1 — Somente Filiados com filiação ativa **e** gamificação ativada (US-02.05) ganham créditos.
+- RN-08.02.2 — 1 crédito por presença confirmada; crédito não expira até ser gasto.
+- RN-08.02.3 — Não retroativo: só presenças confirmadas a partir da ativação da gamificação geram crédito (**questão em aberto Q-5**).
+
+**Notas técnicas**
+
+- Consumidor do evento `ParticipacaoConfirmada` (seção 5.2), idempotente por `participacao_evento_id`, incrementa `creditos_gamificacao.saldo`.
+
+**Dependências:** US-05.04, US-02.05 · **Prioridade:** Must · **Estimativa:** 5 SP
+
+---
+
+#### US-08.03 — Sortear um novo quebra-cabeça
+
+> **Como** filiado sem quebra-cabeça em andamento
+> **Quero** clicar em um dado para sortear qual quebra-cabeça vou montar
+> **Para** começar minha próxima coleção sem saber de antemão o que é
+
+**Critérios de aceite**
+
+- **Dado** que não tenho quebra-cabeça em andamento, **quando** acesso "Gamificação", **então** vejo um dado grande com a chamada "Sortear quebra-cabeça".
+- **Dado** que clico no dado, **quando** o sorteio acontece, **então** a plataforma escolhe aleatoriamente um `quebra_cabeca` `PUBLICADO` que eu ainda não completei, cria meu progresso com 0 de 8 peças, e o tabuleiro aparece com 8 espaços cinzas.
+- **Dado** que já tenho um quebra-cabeça em andamento, **quando** acesso a aba, **então** este dado **não** aparece.
+- **Dado** que já completei todos os quebra-cabeças publicados, **quando** acesso a aba, **então** vejo "Coleção completa" e meus créditos continuam guardados até um novo ser publicado.
+
+**Regras de negócio**
+
+- RN-08.03.1 — Sortear qual quebra-cabeça montar é **gratuito**: não consome crédito.
+- RN-08.03.2 — No máximo um `progresso_quebra_cabeca` com status `EM_ANDAMENTO` por pessoa (constraint no banco).
+- RN-08.03.3 — Sorteio uniforme entre os quebra-cabeças `PUBLICADO` ainda não concluídos pela pessoa.
+
+**Dependências:** US-08.06 · **Prioridade:** Must · **Estimativa:** 8 SP
+
+---
+
+#### US-08.04 — Usar um crédito para sortear uma peça
+
+> **Como** filiado com um quebra-cabeça em andamento e pelo menos 1 crédito
+> **Quero** clicar no dado para trocar um crédito por uma peça
+> **Para** ir completando meu quebra-cabeça a cada evento que participo
+
+**Critérios de aceite**
+
+- **Dado** que tenho quebra-cabeça em andamento e crédito disponível, **quando** clico no dado, **então** o sistema sorteia aleatoriamente uma posição (0 a 7) ainda não obtida, revela a peça e desconta 1 crédito.
+- **Dado** que não tenho créditos, **quando** acesso a aba, **então** o dado aparece desabilitado com "Vá a um evento para ganhar um crédito".
+- **Dado** que clico duas vezes seguidas rapidamente, **quando** o sistema processa, **então** apenas 1 peça é concedida e apenas 1 crédito é descontado.
+- **Dado** que recebo a peça que completa o tabuleiro (8 de 8), **quando** o sorteio termina, **então** vejo a imagem inteira revelada, nome, legenda e história, e ele passa para "Concluídos".
+
+**Regras de negócio**
+
+- RN-08.04.1 — Cada clique gasta exatamente 1 crédito e concede exatamente 1 peça, em transação com bloqueio da linha de progresso.
+- RN-08.04.2 — Peça sorteada aleatoriamente entre as posições ainda não obtidas — sem ordem fixa.
+- RN-08.04.3 — Peças e quebra-cabeças concluídos são permanentes; sobrevivem à perda da filiação ou desativação da gamificação.
+
+**Notas técnicas**
+
+- `peca_conquistada` único por (`pessoa_id`, `quebra_cabeca_id`, `indice`) garante que a mesma posição nunca é sorteada duas vezes para a mesma pessoa.
+
+**Dependências:** US-08.02, US-08.03 · **Prioridade:** Must · **Estimativa:** 8 SP
+
+---
+
+#### US-08.05 — Consultar meus quebra-cabeças e o catálogo
+
+> **Como** filiado
+> **Quero** ver os quebra-cabeças concluídos, o em andamento, meu saldo de créditos e os ainda não descobertos
+> **Para** acompanhar minha coleção e me motivar a ir ao próximo evento
+
+**Critérios de aceite**
+
+- **Dado** que acesso "Gamificação", **quando** a aba carrega, **então** vejo meu saldo de créditos e três blocos: Concluídos, Em andamento e Ainda não descobertos.
+- **Dado** que tenho um quebra-cabeça em andamento, **quando** o vejo, **então** vejo o tabuleiro 2×4 com "X de 8 peças" — sem nome, história ou identificação do quebra-cabeça.
+- **Dado** que abro um quebra-cabeça concluído, **quando** o detalhe carrega, **então** vejo a imagem completa, nome, legenda, história e data de conclusão.
+- **Dado** que inspeciono a resposta da API, **quando** analiso o conteúdo, **então** o identificador do quebra-cabeça em andamento e a URL da imagem completa **não estão presentes**.
+
+**Regras de negócio**
+
+- RN-08.05.1 — A aba mostra apenas a coleção, o progresso e os créditos da pessoa autenticada.
+- RN-08.05.2 — Imagem completa, nome, legenda e história só são exibidos após a conclusão.
+
+**Dependências:** US-08.04 · **Prioridade:** Must · **Estimativa:** 5 SP
+
+---
+
+#### US-08.06 — Admin: cadastrar e manter quebra-cabeças no catálogo
 
 > **Como** administrador
-> **Quero** cadastrar novos badges com arte, critério e forma de comprovação
-> **Para** criar novos reconhecimentos conforme as campanhas do capítulo
+> **Quero** cadastrar quebra-cabeças com imagem, nome, legenda e história curta
+> **Para** alimentar a coleção com os marcos e eventos do capítulo
 
 **Critérios de aceite**
 
-- **Dado** que crio um badge, **quando** informo nome, descrição, arte, tipo e modo de concessão, **então** ele é salvo.
-- **Dado** que escolho o modo "submissão manual", **quando** salvo, **então** os campos "o que deve ser submetido" e "critério de aprovação" tornam-se obrigatórios.
-- **Dado** que escolho o modo "automático", **quando** salvo, **então** devo selecionar uma regra pré-definida (marco de filiação, nº de eventos, voluntariado).
-- **Dado** que defino vigência para um badge comemorativo, **quando** o período termina, **então** ele deixa de aceitar novas submissões, mas quem já o conquistou o mantém.
+- **Dado** que crio um quebra-cabeça, **quando** informo nome, legenda, história curta e imagem (proporção 4:2, deitada, JPG/PNG/WebP até 10 MB), **então** ele é salvo como `RASCUNHO` e a plataforma gera automaticamente as 8 peças (grid 2×4), a silhueta e a imagem completa processada.
+- **Dado** que publico o quebra-cabeça, **quando** confirmo, **então** ele entra no sorteio (US-08.03) e aparece no catálogo.
+- **Dado** que um quebra-cabeça publicado já tem progresso de alguém, **quando** tento trocar a imagem, **então** a alteração é bloqueada — só nome, legenda e história continuam editáveis.
+- **Dado** que arquivo um quebra-cabeça, **quando** confirmo, **então** ele sai do sorteio e do catálogo para quem não o tem; quem está montando termina normalmente.
 
 **Regras de negócio**
 
-- RN-08.01.1 — **Badge concedido é permanente.** Nem exclusão nem inativação do badge removem a conquista de quem já a possui.
-- RN-08.01.2 — Badges são exclusivos de filiados. Exceção configurável: badges de voluntariado.
-- RN-08.01.3 — Arte deve ter fundo transparente e proporção 1:1 (padronização visual).
+- RN-08.06.1 — Sempre 8 peças, grid fixo 2×4 — não configurável pelo Admin.
+- RN-08.06.2 — Exclusão física é proibida para quebra-cabeças com progresso; usar arquivamento.
+- RN-08.06.3 — Imagem é imutável após o primeiro progresso registrado.
 
 **Notas técnicas**
 
-- CRUD completo em `/api/admin/badges`.
-- `regra_json` armazena parâmetros da regra automática, por exemplo `{ "tipo": "MARCO_FILIACAO", "anos": 5 }` ou `{ "tipo": "PARTICIPACAO", "minimo_eventos": 10, "periodo": "2026" }`.
-- Motor de regras com _strategy pattern_: cada tipo de regra é uma classe avaliadora registrada, permitindo novos tipos sem alterar o núcleo.
+- CRUD completo em `/api/admin/quebra-cabecas`.
 
-**CRUD completo:** Create · Read · Update · Delete (apenas de badges nunca concedidos)
+**CRUD completo:** Create · Read · Update (limitado após 1º progresso) · Delete (apenas sem progresso; usar arquivamento)
 
-**Dependências:** US-10.01 · **Prioridade:** Should · **Estimativa:** 13 SP
+**Dependências:** US-10.01 · **Prioridade:** Must · **Estimativa:** 13 SP
 
 ---
 
-#### US-08.02 — Concessão automática de badges de marco de filiação
-
-> **Como** filiado
-> **Quero** receber automaticamente os badges de tempo de filiação
-> **Para** ter reconhecida minha trajetória no PMI sem precisar solicitar nada
-
-**Critérios de aceite**
-
-- **Dado** que minha filiação é confirmada como ativa, **quando** a validação conclui, **então** recebo o badge "Filiado PMI-DF" imediatamente.
-- **Dado** que completo 1, 5 ou 10 anos de filiação (contados de `filiacao_inicio`), **quando** o job diário roda, **então** recebo o badge correspondente e uma notificação por e-mail.
-- **Dado** que já possuo um badge, **quando** o job roda novamente, **então** ele **não** é concedido em duplicidade.
-- **Dado** que o PMI não fornece a data de início da filiação, **quando** o job avalia, **então** o caso entra em fila de concessão manual para o admin.
-
-**Regras de negócio**
-
-- RN-08.02.1 — Tempo de filiação é contínuo desde `filiacao_inicio` do PMI. Interrupções e relações de continuidade devem ser validadas com a diretoria (**questão em aberto Q-4**).
-- RN-08.02.2 — Perder a filiação **não** remove badges já conquistados (RN-08.01.1).
-
-**Notas técnicas**
-
-- Job diário `AvaliarBadgesAutomaticos`, idempotente, com chave única em `badge_concedido (badge_id, pessoa_id)` — a própria constraint garante a não duplicidade mesmo em corrida.
-- Reagir também ao evento `FiliacaoConfirmada` para concessão imediata (sem esperar o job).
-
-**Dependências:** US-08.01, US-01.07 · **Prioridade:** Should · **Estimativa:** 8 SP
-
----
-
-#### US-08.03 — Filiado: submeter evidência para conquistar um badge
-
-> **Como** filiado
-> **Quero** enviar a comprovação de uma missão
-> **Para** conquistar um badge comemorativo
-
-**Critérios de aceite**
-
-- **Dado** que acesso um badge de submissão dentro da vigência, **quando** clico em "Enviar comprovação", **então** vejo claramente o que precisa ser submetido.
-- **Dado** que envio texto e/ou arquivo e/ou URL conforme exigido, **quando** confirmo, **então** a submissão fica `PENDENTE` e recebo confirmação por e-mail.
-- **Dado** que já tenho submissão pendente para aquele badge, **quando** tento enviar outra, **então** sou impedido, com opção de editar a existente.
-- **Dado** que minha submissão foi reprovada, **quando** acesso o badge, **então** vejo a justificativa e posso submeter novamente.
-
-**Notas técnicas**
-
-- `POST /api/badges/{id}/submissoes`, `PATCH /api/badges/submissoes/{id}`, `GET /api/perfil/submissoes`.
-- Anexos: PDF, PNG, JPG até 10 MB, via URL pré-assinada, com validação de _magic bytes_ e varredura antivírus antes de disponibilizar ao admin.
-- Arquivos armazenados em bucket privado; admin acessa por URL pré-assinada de curta duração.
-
-**CRUD:** Create · Read · Update (enquanto pendente) · Delete (cancelamento pelo autor enquanto pendente)
-
-**Dependências:** US-08.01, US-01.06 · **Prioridade:** Could · **Estimativa:** 8 SP
-
----
-
-#### US-08.04 — Admin: avaliar submissões de badges
+#### US-08.07 — Admin: acompanhar o engajamento com a gamificação
 
 > **Como** administrador
-> **Quero** analisar e aprovar ou reprovar as submissões
-> **Para** garantir que o reconhecimento seja legítimo
+> **Quero** ver quantos créditos e peças cada filiado tem, e os totais por quebra-cabeça
+> **Para** avaliar o engajamento e planejar novas publicações
 
 **Critérios de aceite**
 
-- **Dado** que acesso a fila de submissões, **quando** a lista carrega, **então** vejo pendentes primeiro, com badge, pessoa, data e prévia da evidência.
-- **Dado** que aprovo uma submissão, **quando** confirmo, **então** o badge é concedido, a pessoa é notificada e o registro guarda meu usuário e a data.
-- **Dado** que reprovo, **quando** informo a justificativa obrigatória, **então** a pessoa é notificada com o motivo e pode submeter novamente.
-- **Dado** que existem submissões pendentes há mais de 7 dias, **quando** acesso o console, **então** vejo um alerta de SLA.
-
-**Notas técnicas**
-
-- `GET /api/admin/submissoes?status=`, `POST /api/admin/submissoes/{id}/aprovar`, `POST /api/admin/submissoes/{id}/reprovar { justificativa }`.
-- Transição de status protegida por máquina de estados: `PENDENTE → EM_ANALISE → APROVADA|REPROVADA`. Nenhuma transição fora do fluxo é aceita.
-- Toda avaliação vai para `log_auditoria`.
-
-**Dependências:** US-08.03 · **Prioridade:** Could · **Estimativa:** 8 SP
-
----
-
-#### US-08.05 — Vitrine de badges no perfil
-
-> **Como** filiado
-> **Quero** ver os badges que conquistei e os que ainda posso conquistar
-> **Para** me motivar a participar mais da comunidade
-
-**Critérios de aceite**
-
-- **Dado** que acesso "Minhas conquistas", **quando** a página carrega, **então** vejo meus badges com data de conquista e os disponíveis em escala de cinza com o critério para obtê-los.
-- **Dado** que conquisto um badge novo, **quando** acesso a plataforma, **então** vejo uma celebração na primeira visualização.
-- **Dado** que não sou filiado, **quando** acesso a seção, **então** vejo o catálogo de badges como prévia bloqueada com CTA de filiação.
-
-**Notas técnicas**
-
-- `GET /api/perfil/badges` retorna `conquistados[]` e `disponiveis[]` com o critério de cada um.
-
-**Dependências:** US-08.02 · **Prioridade:** Should · **Estimativa:** 5 SP
-
----
-
-#### US-08.06 — Ranking de engajamento em eventos
-
-> **Como** membro participativo
-> **Quero** ver o ranking dos membros mais engajados
-> **Para** me comparar e me motivar a participar mais
-
-**Critérios de aceite**
-
-- **Dado** que acesso o ranking, **quando** a página carrega, **então** vejo o Top 20 do período vigente, com posição, nome, foto e pontuação — **apenas** de quem optou pela gamificação.
-- **Dado** que participo da gamificação mas não estou no Top 20, **quando** acesso, **então** vejo minha posição individual destacada ao final da lista.
-- **Dado** que desativo a gamificação no perfil, **quando** o ranking é recalculado, **então** meu nome não aparece mais em nenhuma posição pública.
-- **Dado** que há empate em pontuação, **quando** o ranking é ordenado, **então** o desempate é pela data da participação mais antiga no período.
+- **Dado** que abro o detalhe de uma pessoa no console, **quando** a página carrega, **então** vejo seu saldo de créditos, os quebra-cabeças concluídos e o em andamento (X de 8).
+- **Dado** que acesso "Gamificação" no console, **quando** a página carrega, **então** vejo os totais: filiados com gamificação ativa, créditos emitidos/gastos no período e quebra-cabeças concluídos no período.
+- **Dado** que exporto os totais, **quando** confirmo, **então** recebo um CSV com uma linha por quebra-cabeça; a ação fica registrada em auditoria.
 
 **Regras de negócio**
 
-- RN-08.06.1 — Pontuação padrão sugerida (a validar com a diretoria — **Q-5**): presença confirmada em evento = 10 pontos; evento presencial = +5; voluntariado ativo no período = +20/mês.
-- RN-08.06.2 — Ranking é anual, com histórico dos anos anteriores consultável.
-- RN-08.06.3 — Apenas participações com `CHECKIN` pontuam (RN-05.04.1).
-- RN-08.06.4 — `opt_in_gamificacao = false` remove a pessoa da exibição pública, mas a pontuação continua sendo calculada e visível apenas para ela (permite reativar sem perder histórico).
+- RN-08.07.1 — Todos os números são calculados a partir das concessões registradas; nenhum é digitado.
+- RN-08.07.2 — O Admin não concede nem remove créditos ou peças manualmente.
 
-**Notas técnicas**
-
-- `GET /api/ranking?periodo=2026`; materializar em `pontuacao_engajamento`, recalculado de forma assíncrona a cada `ParticipacaoConfirmada` (nunca calcular no request).
-- Cache de 10 minutos na listagem pública.
-
-**Dependências:** US-05.04, US-02.05 · **Prioridade:** Could · **Estimativa:** 13 SP
+**Dependências:** US-08.04, US-02.06 · **Prioridade:** Should · **Estimativa:** 8 SP
 
 ---
 
@@ -1473,7 +1486,7 @@ Algoritmo de participantes:
 **Notas técnicas**
 
 - DTOs distintos por nível de acesso: `BeneficioPublicoDTO` vs `BeneficioFiliadoDTO`. Nada de serializar o objeto completo e "esconder" no frontend.
-- Componente `<ConteudoBloqueado origem="beneficios|conteudos|badges" />` com rastreamento de origem para análise de conversão.
+- Componente `<ConteudoBloqueado origem="beneficios|conteudos|gamificacao" />` com rastreamento de origem para análise de conversão.
 
 **Dependências:** US-01.03 · **Prioridade:** Must · **Estimativa:** 8 SP
 
@@ -1509,7 +1522,7 @@ Algoritmo de participantes:
 **Critérios de aceite**
 
 - **Dado** que minha filiação é confirmada, **quando** acesso a plataforma, **então** vejo uma tela de boas-vindas listando os recursos desbloqueados.
-- **Dado** que estou na tela de boas-vindas, **quando** navego pelo tour, **então** sou apresentado a benefícios, conteúdo exclusivo e badges, com opção de pular a qualquer momento.
+- **Dado** que estou na tela de boas-vindas, **quando** navego pelo tour, **então** sou apresentado a benefícios, conteúdo exclusivo e à coleção de quebra-cabeças da gamificação, com opção de pular a qualquer momento.
 - **Dado** que já vi o tour, **quando** entro novamente, **então** ele não é exibido de novo.
 
 **Dependências:** US-01.07 · **Prioridade:** Could · **Estimativa:** 5 SP
@@ -1591,7 +1604,7 @@ Algoritmo de participantes:
 
 **Critérios de aceite**
 
-- **Dado** que solicito a exportação, **quando** confirmo, **então** recebo em até 15 dias um arquivo JSON/CSV com meus dados pessoais, participações, resgates e badges.
+- **Dado** que solicito a exportação, **quando** confirmo, **então** recebo em até 15 dias um arquivo JSON/CSV com meus dados pessoais, participações, resgates, créditos de gamificação e quebra-cabeças conquistados.
 - **Dado** que solicito a exclusão, **quando** confirmo com senha ou reautenticação, **então** minha conta é anonimizada em até 15 dias e recebo confirmação.
 - **Dado** que minha conta foi anonimizada, **quando** os relatórios agregados são gerados, **então** as métricas históricas permanecem corretas sem me identificar.
 - **Dado** que há obrigação legal de retenção (registros fiscais/contratuais de benefícios), **quando** a exclusão é processada, **então** esses registros são preservados de forma pseudonimizada, com justificativa informada ao titular.
@@ -1654,10 +1667,10 @@ Legenda: **C** Criar · **R** Ler · **U** Atualizar · **D** Excluir (`L` = ló
 | `categoria_conteudo`    |      R      |      R      |  C R U D(L)  |        —        |                                       |
 | `visualizacao_conteudo` |      —      |      A      |      R       |        A        | Registro automático                   |
 | `vaga`                  |      R      |      R      |  C R U D(L)  |  A (expiração)  | Slug imutável                         |
-| `badge`                 |      —      |      R      | C R U D(F\*) |        —        | \*Delete físico só se nunca concedido |
-| `badge_concedido`       |      —      |      R      |     C R      |   A (regras)    | **Nunca deletável**                   |
-| `submissao_badge`       |      —      |   C R U D   |     R U      |        —        | Update do filiado só se `PENDENTE`    |
-| `pontuacao_engajamento` | R (própria) |      R      |      R       |  A (recálculo)  | Materializada                         |
+| `quebra_cabeca`           |      —      |      R      | C R U D(F\*) |        —        | \*Delete físico só se nunca teve progresso |
+| `progresso_quebra_cabeca` |      —      | R (própria) |      R       |  A (sorteio)    | **Nunca deletável**                   |
+| `peca_conquistada`        |      —      | R (própria) |      R       |  A (sorteio)    | **Nunca deletável**                   |
+| `creditos_gamificacao`    |      —      | R (própria) |      R       | A (evento + gasto) | Saldo, nunca negativo               |
 | `log_auditoria`         |      —      |      —      |      R       |        A        | Append-only, imutável                 |
 
 ---
@@ -1750,11 +1763,11 @@ Legenda: **C** Criar · **R** Ler · **U** Atualizar · **D** Excluir (`L` = ló
 
 ### Incremento 5 — Reconhecimento e conversão
 
-`US-08.01` · `US-08.02` · `US-08.05` · `US-09.02` · `US-10.05` · `US-06.04` · `US-01.04`
+`US-08.01` · `US-08.02` · `US-08.03` · `US-08.04` · `US-08.05` · `US-08.06` · `US-09.02` · `US-10.05` · `US-06.04` · `US-01.04`
 
 ### Incremento 6 — Engajamento avançado
 
-`US-08.03` · `US-08.04` · `US-08.06` · `US-03.03` · `US-07.03` · `US-09.03` · `US-01.08`
+`US-08.07` · `US-03.03` · `US-07.03` · `US-09.03` · `US-01.08`
 
 ---
 
@@ -1783,11 +1796,11 @@ Legenda: **C** Criar · **R** Ler · **U** Atualizar · **D** Excluir (`L` = ló
 
 | ID  | Questão                                                                             | Bloqueia           | Responsável          |
 | --- | ----------------------------------------------------------------------------------- | ------------------ | -------------------- |
-| Q-1 | A API do PMI retorna `member_since` (data de início da filiação)?                   | US-08.02           | Diretoria + TI PMI   |
+| Q-1 | A API do PMI retorna `member_since` (data de início da filiação)? *Não bloqueia mais o ÉP-08 após a v2.0 — a gamificação não depende de tempo de filiação; mantido só como dado informativo do perfil.* | US-02.01 | Diretoria + TI PMI   |
 | Q-2 | Qual a periodicidade contratual permitida de consulta à base do PMI?                | US-01.07           | Diretoria            |
 | Q-3 | Benefícios têm limite de resgates negociado com os parceiros?                       | US-04.01           | Dir. de Parcerias    |
-| Q-4 | Filiação interrompida e retomada conta como tempo contínuo para os badges de marco? | US-08.02           | Diretoria            |
-| Q-5 | Qual a régua oficial de pontuação do ranking de engajamento?                        | US-08.06           | Diretoria            |
+| Q-4 | Quantos quebra-cabeças devem existir no catálogo no lançamento, para o sorteio fazer sentido (sugestão: 4 a 6)? | US-08.06 | Diretoria            |
+| Q-5 | Presenças confirmadas durante o período em que a gamificação estava desativada devem virar crédito ao reativar? | US-08.02 | Diretoria            |
 | Q-6 | O organograma deve exibir contato dos voluntários ou apenas nome e cargo?           | US-03.03           | Diretoria + Jurídico |
 | Q-7 | Vagas podem ser submetidas por empresas ou apenas cadastradas pelo admin?           | US-07.01           | Dir. de Carreira     |
 | Q-8 | Quem será o encarregado de dados (DPO) do capítulo?                                 | US-10.03, US-10.04 | Presidência          |
@@ -1806,7 +1819,8 @@ Legenda: **C** Criar · **R** Ler · **U** Atualizar · **D** Excluir (`L` = ló
 | **PDU**          | _Professional Development Unit_, unidade de educação continuada para manutenção de certificações PMI.           |
 | **ThoughtSpot**  | Plataforma de analytics usada pelo PMI para disponibilizar dados de filiação aos capítulos.                     |
 | **Sympla**       | Plataforma brasileira de gestão de eventos e inscrições usada pelo capítulo.                                    |
-| **Badge**        | Selo digital de reconhecimento, permanente após conquistado.                                                    |
+| **Quebra-cabeça** | Coleção de 8 peças da gamificação (ÉP-08), sorteada entre os publicados e revelada peça a peça com créditos.   |
+| **Crédito de gamificação** | Direito ganho a cada presença confirmada em evento, trocável por 1 peça de quebra-cabeça.              |
 | **IDOR**         | _Insecure Direct Object Reference_: falha em que se acessa dado alheio trocando um identificador na requisição. |
 | **Idempotência** | Propriedade de uma operação que, repetida, produz o mesmo resultado sem efeitos colaterais adicionais.          |
 | **Soft delete**  | Exclusão lógica: o registro é marcado como removido, mas permanece no banco para integridade e auditoria.       |
