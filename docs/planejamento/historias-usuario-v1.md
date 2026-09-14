@@ -232,7 +232,7 @@ Legenda: **L** = Ler · **P** = Prévia bloqueada (freemium) · **E** = Escrever
 
 #### Gamificação
 
-**`quebra_cabeca`**: `id`, `nome`, `legenda`, `historia_curta`, `imagem_url`, `proporcao` (fixa `4:2`), `grid` (fixo `2x4`, 8 peças), `silhueta_url`, `status` (`RASCUNHO`, `PUBLICADO`, `ARQUIVADO`).
+**`quebra_cabeca`**: `id`, `nome`, `legenda`, `historia_curta`, `imagem_url`, `proporcao` (fixa `4:2`), `grid` (fixo `2x4`, 8 peças), `silhueta_url`, `status` (`RASCUNHO`, `PUBLICADO`, `ARQUIVADO`). Na interface, `ARQUIVADO` é rotulado "Fora do ar" e é reversível pelo Admin (US-08.09).
 **`progresso_quebra_cabeca`**: `id`, `quebra_cabeca_id`, `pessoa_id`, `pecas_obtidas` (0 a 8), `status` (`EM_ANDAMENTO`, `CONCLUIDO`), `iniciado_em`, `concluido_em`. **No máximo uma linha `EM_ANDAMENTO` por `pessoa_id`** (constraint).
 **`peca_conquistada`**: `id`, `quebra_cabeca_id`, `pessoa_id`, `indice` (0 a 7), `participacao_evento_id`, `conquistada_em`. Único por (`pessoa_id`, `quebra_cabeca_id`, `indice`).
 **`creditos_gamificacao`**: `id`, `pessoa_id` UNIQUE, `saldo`, `atualizado_em`. Incrementado por `ParticipacaoConfirmada`; decrementado quando um crédito é trocado por uma peça (US-08.04).
@@ -1411,7 +1411,7 @@ Algoritmo de participantes:
 
 ---
 
-#### US-08.06 — Admin: cadastrar e manter quebra-cabeças no catálogo
+#### US-08.06 — Admin: cadastrar um quebra-cabeça no catálogo
 
 > **Como** administrador
 > **Quero** cadastrar quebra-cabeças com imagem, nome, legenda e história curta
@@ -1420,44 +1420,86 @@ Algoritmo de participantes:
 **Critérios de aceite**
 
 - **Dado** que crio um quebra-cabeça, **quando** informo nome, legenda, história curta e imagem (proporção 4:2, deitada, JPG/PNG/WebP até 10 MB), **então** ele é salvo como `RASCUNHO` e a plataforma gera automaticamente as 8 peças (grid 2×4), a silhueta e a imagem completa processada.
-- **Dado** que publico o quebra-cabeça, **quando** confirmo, **então** ele entra no sorteio (US-08.03) e aparece no catálogo.
-- **Dado** que um quebra-cabeça publicado já tem progresso de alguém, **quando** tento trocar a imagem, **então** a alteração é bloqueada — só nome, legenda e história continuam editáveis.
-- **Dado** que arquivo um quebra-cabeça, **quando** confirmo, **então** ele sai do sorteio e do catálogo para quem não o tem; quem está montando termina normalmente.
+- **Dado** que a imagem foi processada, **quando** clico em "Pré-visualizar", **então** vejo a silhueta do catálogo e o tabuleiro numerado com as 8 peças.
+- **Dado** que publico o quebra-cabeça, **quando** confirmo, **então** vejo a tela "Quebra-cabeça criado com sucesso!" e ele entra no sorteio (US-08.03) e aparece no catálogo.
+- **Dado** que consulto a lista no console, **quando** ela carrega, **então** vejo cada quebra-cabeça com status, nº de peças, quantos concluíram, quantos estão montando, e os botões Editar (US-08.08) e Tirar do ar (US-08.09).
 
 **Regras de negócio**
 
 - RN-08.06.1 — Sempre 8 peças, grid fixo 2×4 — não configurável pelo Admin.
-- RN-08.06.2 — Exclusão física é proibida para quebra-cabeças com progresso; usar arquivamento.
-- RN-08.06.3 — Imagem é imutável após o primeiro progresso registrado.
+- RN-08.06.2 — Exclusão física é proibida para quebra-cabeças com progresso; usar "Tirar do ar" (US-08.09).
 
 **Notas técnicas**
 
 - CRUD completo em `/api/admin/quebra-cabecas`.
 
-**CRUD completo:** Create · Read · Update (limitado após 1º progresso) · Delete (apenas sem progresso; usar arquivamento)
+**CRUD completo:** Create · Read · Update (US-08.08) · Delete (apenas sem progresso; usar US-08.09)
 
-**Dependências:** US-10.01 · **Prioridade:** Must · **Estimativa:** 13 SP
+**Dependências:** US-10.01 · **Prioridade:** Must · **Estimativa:** 8 SP
 
 ---
 
-#### US-08.07 — Admin: acompanhar o engajamento com a gamificação
+#### US-08.07 — Admin: ver o ranking dos 10 filiados mais engajados
 
 > **Como** administrador
-> **Quero** ver quantos créditos e peças cada filiado tem, e os totais por quebra-cabeça
-> **Para** avaliar o engajamento e planejar novas publicações
+> **Quero** ver quem são os filiados que mais completam quebra-cabeças
+> **Para** ter uma noção rápida do engajamento com a gamificação
 
 **Critérios de aceite**
 
-- **Dado** que abro o detalhe de uma pessoa no console, **quando** a página carrega, **então** vejo seu saldo de créditos, os quebra-cabeças concluídos e o em andamento (X de 8).
-- **Dado** que acesso "Gamificação" no console, **quando** a página carrega, **então** vejo os totais: filiados com gamificação ativa, créditos emitidos/gastos no período e quebra-cabeças concluídos no período.
-- **Dado** que exporto os totais, **quando** confirmo, **então** recebo um CSV com uma linha por quebra-cabeça; a ação fica registrada em auditoria.
+- **Dado** que estou na lista de quebra-cabeças no console, **quando** clico em "Ver estatísticas", **então** vejo uma tela de ranking.
+- **Dado** que a tela de ranking carrega, **quando** a lista aparece, **então** vejo os 10 filiados com mais quebra-cabeças concluídos, em ordem decrescente, cada um com nome, "completos / total publicados" e "peças do atual / 8".
+- **Dado** que clico em "‹ Voltar para quebra-cabeças", **quando** o clique acontece, **então** volto para a lista do console.
 
 **Regras de negócio**
 
-- RN-08.07.1 — Todos os números são calculados a partir das concessões registradas; nenhum é digitado.
-- RN-08.07.2 — O Admin não concede nem remove créditos ou peças manualmente.
+- RN-08.07.1 — O ranking é calculado a partir de `progresso.status = CONCLUIDO`; nenhum número é digitado.
+- RN-08.07.2 — Empate no total de concluídos é desempatado pela conclusão mais antiga primeiro.
 
-**Dependências:** US-08.04, US-02.06 · **Prioridade:** Should · **Estimativa:** 8 SP
+**Dependências:** US-08.04, US-08.06 · **Prioridade:** Should · **Estimativa:** 5 SP
+
+---
+
+#### US-08.08 — Admin: editar um quebra-cabeça existente
+
+> **Como** administrador
+> **Quero** editar nome, legenda, história e — quando ainda não há progresso — a imagem de um quebra-cabeça
+> **Para** corrigir ou refinar o conteúdo sem precisar recriar do zero
+
+**Critérios de aceite**
+
+- **Dado** que clico em "Editar" numa linha da lista, **quando** o formulário abre, **então** ele já vem preenchido com os dados atuais do quebra-cabeça.
+- **Dado** que o quebra-cabeça ainda não tem progresso, **quando** troco a imagem, **então** os recortes são gerados de novo a partir da nova imagem.
+- **Dado** que o quebra-cabeça já tem progresso de alguém, **quando** abro a edição, **então** o campo de imagem aparece bloqueado ("🔒 Imagem bloqueada — já há peças conquistadas por filiados") e só nome, legenda e história continuam editáveis.
+- **Dado** que confirmo as alterações, **quando** clico em "Salvar alterações", **então** vejo a tela "Alterações salvas com sucesso!" antes de voltar para a lista.
+
+**Regras de negócio**
+
+- RN-08.08.1 — Editar não afeta peças já concedidas nem o progresso de ninguém.
+- RN-08.08.2 — Imagem é imutável após o primeiro progresso registrado, para não invalidar peças já concedidas.
+
+**Dependências:** US-08.06 · **Prioridade:** Must · **Estimativa:** 5 SP
+
+---
+
+#### US-08.09 — Admin: tirar um quebra-cabeça do ar
+
+> **Como** administrador
+> **Quero** tirar um quebra-cabeça do ar temporariamente
+> **Para** pausá-lo sem perder o cadastro, podendo trazê-lo de volta depois
+
+**Critérios de aceite**
+
+- **Dado** que clico em "Tirar do ar" numa linha, **quando** o banner de confirmação abre, **então** vejo a explicação de que o quebra-cabeça fica marcado como "Fora do ar", sai do sorteio, mas quem já está montando ou já concluiu continua vendo normalmente — com as opções Cancelar e Tirar do ar.
+- **Dado** que confirmo, **quando** a ação é processada, **então** a linha na lista aparece esmaecida, com status "Fora do ar" e um único botão "Subir novamente" no lugar de Editar/Tirar do ar.
+- **Dado** que clico em "Subir novamente", **quando** confirmo, **então** o status volta a `PUBLICADO` e ele volta a entrar no sorteio (US-08.03).
+
+**Regras de negócio**
+
+- RN-08.09.1 — "Fora do ar" é o mesmo status `ARQUIVADO`, agora reversível pelo Admin a qualquer momento.
+- RN-08.09.2 — Tirar do ar e subir novamente são registrados em auditoria.
+
+**Dependências:** US-08.06 · **Prioridade:** Must · **Estimativa:** 5 SP
 
 ---
 
@@ -1763,7 +1805,7 @@ Legenda: **C** Criar · **R** Ler · **U** Atualizar · **D** Excluir (`L` = ló
 
 ### Incremento 5 — Reconhecimento e conversão
 
-`US-08.01` · `US-08.02` · `US-08.03` · `US-08.04` · `US-08.05` · `US-08.06` · `US-09.02` · `US-10.05` · `US-06.04` · `US-01.04`
+`US-08.01` · `US-08.02` · `US-08.03` · `US-08.04` · `US-08.05` · `US-08.06` · `US-08.08` · `US-08.09` · `US-09.02` · `US-10.05` · `US-06.04` · `US-01.04`
 
 ### Incremento 6 — Engajamento avançado
 
