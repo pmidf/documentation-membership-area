@@ -229,27 +229,6 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 - RN-04.07.2 — A exportação de benefícios traz apenas dados do benefício e totais; **não** traz dados de quem resgatou — isso pertence ao relatório de resgates (US-04.08).
 - RN-04.07.3 — Benefícios arquivados constam na exportação, para que a prestação de contas cubra parcerias já encerradas.
 
----
-
-### US-04.08 — Acompanhar o relatório de resgates
-
-**Atores:** Admin
-
-> **Como** Admin
-> **Quero** acompanhar os resgates por período e por benefício, e saber quem resgatou
-> **Para** negociar renovações com parceiros usando dados reais e atender pedidos de conferência
-
-**Critérios de aceite**
-
-1. **Dado** que acesso "Relatório de resgates", **quando** filtro por período, benefício, parceiro ou categoria, **então** vejo total de resgates, filiados únicos e taxa de utilização sobre a base de filiados ativos.
-2. **Dado** que abro um benefício no relatório, **quando** a página carrega, **então** vejo a evolução de resgates ao longo do tempo.
-3. **Dado** que exporto o relatório, **quando** confirmo, **então** recebo um CSV com uma linha por resgate: benefício, parceiro, data, nome e e-mail do filiado e status de filiação no momento do resgate; a exportação é registrada em auditoria.
-4. **Dado** que abro o detalhe de uma pessoa no console (ÉP-02, US-02.10), **quando** a página carrega, **então** vejo a lista dos resgates dela com benefício, data e status de filiação no momento do resgate.
-
-**Regras de negócio**
-
-- RN-04.08.1 — Exportação de dados de resgate identifica o filiado; é ação sensível, sempre registrada em auditoria.
-- RN-04.08.2 — A taxa de utilização usa como denominador o número de filiados ativos no último dia do período filtrado.
 
 ---
 
