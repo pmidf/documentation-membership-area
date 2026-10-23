@@ -4,7 +4,7 @@
 
 **Objetivo:** permitir que qualquer pessoa crie conta e entre na plataforma com baixa fricção e, de forma segura e sem intervenção humana, determinar **quem é filiado ativo ao PMI-DF**, usando o ThoughtSpot do PMI como fonte de verdade da filiação — sem depender dele para autenticar.
 
-**Valor:** é a camada que sustenta todos os demais épicos. Sem ela a plataforma não sabe quem é a pessoa nem se ela é Filiada — e, portanto, não consegue liberar o clube de benefícios (ÉP-04), o conteúdo exclusivo (ÉP-06), as oportunidades (ÉP-07) e a gamificação (ÉP-08) apenas a quem tem filiação vigente. Classificado como **Essencial** no brainstorming (item 1 — login, cadastro, entrar com o Google e "esqueci a senha").
+**Valor:** é a camada que sustenta todos os demais épicos. Sem ela a plataforma não sabe quem é a pessoa nem se ela é Filiada — e, portanto, não consegue liberar o clube de benefícios (ÉP-04), o conteúdo exclusivo (ÉP-06), as oportunidades (ÉP-07) e a gamificação (ÉP-08) apenas a quem tem filiação vigente. Classificado como **Essencial** no brainstorming (item 1 — login, cadastro, entrar com o Google e "esqueci a senha"). **Decidimos retirar a integração com o Google** (ver [Decisões](#decisoes)); as menções a ela foram mantidas neste documento como histórico.
 
 Os atores estão definidos em [Perfis de Usuário](../planejamento/perfil-usuario.md). Os dados obrigatórios do cadastro são os mesmos de "Meu perfil" ([ÉP-02, US-02.01](meu-perfil.md#us-0201-visualizar-e-editar-meus-dados-pessoais)).
 
@@ -14,7 +14,7 @@ Os atores estão definidos em [Perfis de Usuário](../planejamento/perfil-usuari
 
 | Princípio | O que significa |
 |-----------|-----------------|
-| **Autenticação é da plataforma** | Login com e-mail e senha próprios (ou Google). O PMI não participa do login; se o ThoughtSpot estiver fora do ar, cadastro e login continuam funcionando com o último status conhecido. |
+| **Autenticação é da plataforma** | Login com e-mail e senha próprios (ou Google — **retirado**, ver Decisões). O PMI não participa do login; se o ThoughtSpot estiver fora do ar, cadastro e login continuam funcionando com o último status conhecido. |
 | **Filiação é do PMI** | A plataforma nunca "decide" que alguém é filiado: consulta a base do PMI e grava o resultado. O Admin pode conceder manualmente em casos excepcionais (ÉP-02, US-02.11). |
 | **Um PMI ID, uma conta** | Cada PMI ID pode estar vinculado a **uma única** conta aprovada. |
 | **Posse do e-mail do PMI** | Além de o PMI ID existir e estar ativo no PMI-DF, a pessoa prova que controla o e-mail cadastrado no PMI, por código de 6 dígitos. É isso que impede alguém de usar o PMI ID de outra pessoa. |
@@ -88,7 +88,7 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 
 | Recurso | Visitante | Não-Filiado | Filiado | Admin |
 |---------|:---------:|:-----------:|:-------:|:-----:|
-| Criar conta (e-mail/senha ou Google), informando PMI ID se já for filiado | E | — | — | — |
+| Criar conta (e-mail/senha ou Google — Google retirado), informando PMI ID se já for filiado | E | — | — | — |
 | Entrar, recuperar senha, confirmar e-mail | E | E | E | E |
 | Onboarding inicial | — | E | E | E |
 | Vincular filiação (PMI ID + e-mail do PMI) | — | E | — | conforme filiação |
@@ -108,7 +108,7 @@ Legenda: **L** = Ler · **E** = Escrever · **—** = Sem acesso
 |----|----------|--------|------------|
 | [US-01.01](#us-0101-criar-conta-com-e-mail-e-senha) | Criar conta com e-mail e senha | Visitante | Must |
 | [US-01.02](#us-0102-confirmar-meu-e-mail-e-concluir-o-cadastro) | Confirmar meu e-mail e concluir o cadastro | Visitante | Must |
-| [US-01.03](#us-0103-criar-conta-ou-entrar-com-o-google) | Criar conta ou entrar com o Google | Visitante, Não-Filiado, Filiado | Should |
+| [US-01.03](#us-0103-criar-conta-ou-entrar-com-o-google) | Criar conta ou entrar com o Google (**retirada**) | Visitante, Não-Filiado, Filiado | ~~Should~~ Won't |
 | [US-01.04](#us-0104-entrar-com-e-mail-e-senha) | Entrar com e-mail e senha | Não-Filiado, Filiado, Admin | Must |
 | [US-01.05](#us-0105-recuperar-minha-senha) | Recuperar minha senha | Não-Filiado, Filiado, Admin | Must |
 | [US-01.06](#us-0106-responder-o-onboarding-inicial) | Responder o onboarding inicial | Não-Filiado, Filiado | Should |
@@ -203,12 +203,14 @@ Já tinha conta e se filiou depois ─► Meu perfil > Filiação PMI > "Atualiz
 
 - RN-01.02.1 — Código de 6 dígitos e link de uso único, expiram em 24 horas; apenas o *hash* é armazenado; 5 erros invalidam o código.
 - RN-01.02.2 — O e-mail confirmado é pré-requisito para tudo: entrar, vincular filiação, resgatar benefícios, vincular e-mails do Sympla.
-- RN-01.02.3 — Contas criadas via Google nascem confirmadas (US-01.03); se informarem PMI ID ao completar o cadastro, a consulta automática do critério 3 roda ao concluir.
+- RN-01.02.3 — Contas criadas via Google nascem confirmadas (US-01.03); se informarem PMI ID ao completar o cadastro, a consulta automática do critério 3 roda ao concluir. *(Sem efeito: a integração com o Google foi retirada.)*
 - RN-01.02.4 — A consulta automática conta como uma tentativa de vinculação para os limites de RN-01.07.5 e é registrada como as demais (RN-01.07.7).
 
 ---
 
 ### US-01.03 — Criar conta ou entrar com o Google
+
+> **História retirada.** Decidimos retirar a integração com o Google: cadastro e login são feitos apenas com e-mail e senha. A história fica registrada abaixo como histórico e não deve ser implementada (prioridade `Won't`).
 
 **Atores:** Visitante, Não-Filiado, Filiado
 
@@ -295,7 +297,7 @@ Já tinha conta e se filiou depois ─► Meu perfil > Filiação PMI > "Atualiz
 
 **Critérios de aceite**
 
-1. **Dado** que confirmei o e-mail (ou completei o cadastro via Google) e a etapa de filiação foi resolvida ou pulada, **quando** entro pela primeira vez, **então** vejo o onboarding em dois passos: interesse principal e momento de carreira.
+1. **Dado** que confirmei o e-mail (ou completei o cadastro via Google — opção retirada) e a etapa de filiação foi resolvida ou pulada, **quando** entro pela primeira vez, **então** vejo o onboarding em dois passos: interesse principal e momento de carreira.
 2. **Dado** que estou em qualquer passo, **quando** clico em "Pular por agora", **então** sigo para a home sem bloqueio.
 3. **Dado** que sou Não-Filiado sem PMI ID informado, **quando** concluo ou pulo, **então** chego à home com o convite "Já é filiado? Atualize sua situação" visível no perfil e nos painéis de prévia desfocada.
 4. **Dado** que sou Filiado recém-aprovado, **quando** concluo ou pulo, **então** vejo uma tela de boas-vindas listando o que foi desbloqueado (benefícios, conteúdo exclusivo, oportunidades, conquistas), exibida uma única vez.
@@ -550,7 +552,8 @@ Já tinha conta e se filiou depois ─► Meu perfil > Filiação PMI > "Atualiz
 - **Acabou a filiação, acabou o acesso — sem carência.** Quando a revalidação deixa de reconhecer a filiação, a pessoa é Não-Filiado imediatamente. Um lembrete 30 dias antes do vencimento (US-01.11, critério 7) substitui a carência como mecanismo para evitar surpresa. Renovou no PMI → "Atualizar situação" restabelece o acesso sem novo código.
 - **Uma confirmação só no caso comum.** O cadastro pergunta "Já é filiado?" e pede o PMI ID, com a dica de usar o e-mail do MyPMI. Confirmado o e-mail da conta, a plataforma consulta o PMI automaticamente; se o e-mail do PMI for o mesmo, a filiação é aprovada sem segunda etapa. Só quando os e-mails são diferentes há um segundo código — inevitável por segurança e aproveitado: o e-mail do PMI vira e-mail alternativo verificado para o Sympla.
 - **"Atualizar situação"** é o único ponto de entrada para quem já tem conta: abre o formulário (sem vínculo), reconsulta o PMI (pendente ou expirado) ou retoma o código. Corresponde ao "Verificar agora" do fluxo original; o nome foi unificado. A história correspondente no perfil é a US-02.06 do ÉP-02.
-- **Cadastro completo desde o início.** Todos os dados obrigatórios de "Meu perfil" (ÉP-02, RN-02.01.1) são exigidos no cadastro, em etapas; LinkedIn é o único opcional. Quem entra via Google completa o cadastro antes de acessar qualquer tela.
+- **Cadastro completo desde o início.** Todos os dados obrigatórios de "Meu perfil" (ÉP-02, RN-02.01.1) são exigidos no cadastro, em etapas; LinkedIn é o único opcional. Quem entra via Google completa o cadastro antes de acessar qualquer tela (sem efeito: a integração com o Google foi retirada).
+- **Integração com o Google retirada.** Cadastro e login são feitos apenas com e-mail e senha. A US-01.03 passou a `Won't`, e as menções ao Google neste documento foram mantidas como histórico, marcadas como retiradas.
 - **Idade mínima de 18 anos** no cadastro.
 - **Verificação da conta por código de 6 dígitos (com link equivalente)**, e não apenas por link: a pessoa permanece na mesma tela e o mesmo componente serve para o código do PMI.
 - **Consulta em tempo real, sem *batch* diário.** Diferente da v1 (job às 03:00), a revalidação acontece no login (última verificação > 7 dias ou expiração vencida) e sob demanda. A data de expiração gravada é verificada a cada requisição a recurso exclusivo, então quem não entra desde o vencimento também perde o acesso.
@@ -558,7 +561,7 @@ Já tinha conta e se filiou depois ─► Meu perfil > Filiação PMI > "Atualiz
 - **Concessão manual continua no ÉP-02** (US-02.11); este épico apenas fornece o comprovante (US-01.10) e o status `CONCEDIDO_MANUALMENTE`, promovido a `APROVADO` se a base do PMI passar a reconhecer a filiação.
 - **Nome vem do PMI após a aprovação.** O nome digitado no cadastro é substituído pelo nome da base do PMI e fica somente leitura (ÉP-02, US-02.07).
 - **Único nível de Admin**, concedido por outro Admin (US-01.14); papéis granulares (conteúdo, eventos, benefícios) ficam para depois, com o modelo de dados já preparado.
-- **Fora do escopo:** login com LinkedIn ou outros provedores; autenticação em dois fatores (2FA) para usuários comuns; cadastro de Estudante com comprovante de matrícula (item 16 do brainstorming); aprovação manual de cadastro (item 17) — qualquer pessoa cria conta; sincronização em lote da base inteira do PMI.
+- **Fora do escopo:** login com Google (retirado, ver acima), LinkedIn ou outros provedores; autenticação em dois fatores (2FA) para usuários comuns; cadastro de Estudante com comprovante de matrícula (item 16 do brainstorming); aprovação manual de cadastro (item 17) — qualquer pessoa cria conta; sincronização em lote da base inteira do PMI.
 
 ### Questões em aberto
 
@@ -579,3 +582,4 @@ Já tinha conta e se filiou depois ─► Meu perfil > Filiação PMI > "Atualiz
 |--------|------|-----------|-------|---------|
 | 1.0 | 13/09/2026 | Criação do documento — histórias do ÉP-01 (Autenticação e Validação de Filiação) para Visitante, Não-Filiado, Filiado e Admin, com o fluxo de vinculação ao PMI via ThoughtSpot, estados de vinculação, confirmação por código e revalidação com carência | Vitor Leonardo | Nome do revisor |
 | 1.1 | 13/09/2026 | Remoção da carência (expirou → Não-Filiado imediatamente) com lembrete prévio de 30 dias; idade mínima de 18 anos; jornada com uma única confirmação para quem se cadastra com o e-mail do PMI (PMI ID opcional no cadastro, consulta automática após confirmar o e-mail, e-mail do PMI vira alternativo verificado); "Verificar agora" renomeado para "Atualizar situação" e detalhado por status; onboarding reduzido a dois passos | Vitor Leonardo | Nome do revisor |
+| 1.2 | 22/10/2026 | Retirada da integração com o Google: US-01.03 passa a `Won't`; as menções ao Google foram mantidas e marcadas como retiradas | Ana Clara Borges |  |

@@ -98,7 +98,7 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 **Regras de negócio**
 
 - RN-07.02.1 — O desfoque é aplicado no frontend, mas a **proteção é a omissão de campos no backend**.
-- RN-07.02.2 — Visitantes não autenticados veem a mesma prévia; a diferença é o CTA, que primeiro pede cadastro.
+- RN-07.02.2 — Visitantes não autenticados **não têm acesso** a Oportunidades, nem à prévia desfocada: a área exige login, assim como Profissionais da comunidade (RN-07.01.4).
 - RN-07.02.3 — O mesmo componente de prévia desfocada do clube de benefícios (ÉP-04, US-04.01) é reutilizado aqui.
 
 ---
@@ -127,7 +127,7 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 
 **Regras de negócio**
 
-- RN-07.03.1 — Oportunidades são **exclusivas para Filiados** com filiação ativa; a verificação é feita no backend a cada requisição.
+- RN-07.03.1 — Oportunidades são **exclusivas para Filiados** com filiação ativa; a verificação é feita no backend a cada requisição. Visitantes não autenticados não têm acesso a nenhuma parte de Oportunidades (RN-07.02.2).
 - RN-07.03.2 — Não há candidatura, envio de currículo ou qualquer interação **dentro** da plataforma; o processo seletivo acontece no link ou por e-mail, fora dela.
 - RN-07.03.3 — O e-mail do recrutador só é entregue **após o clique** em "Enviar e-mail", nunca na listagem — protege o recrutador contra coleta automatizada.
 
@@ -212,6 +212,7 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 ### Decisões
 
 - **Duas visões em uma área, com acessos opostos**: "Profissionais da comunidade" é visível a todos os usuários (Filiados e Não-Filiados), mas só Filiados aparecem; "Oportunidades" é exclusiva para Filiados, com prévia desfocada para Não-Filiados.
+- **A Vitrine inteira exige autenticação.** Visitantes não autenticados não acessam Profissionais da comunidade nem Oportunidades — nem mesmo a prévia desfocada das vagas.
 - **Aparecer na vitrine é *opt-in*** pela marcação em "Meu perfil" (ÉP-02, US-02.08). Só dados profissionais são exibidos; e-mail, telefone, endereço e dados demográficos nunca.
 - **Sem "aberto a oportunidades", sem currículo, sem mensagens internas.** A vitrine apresenta; a conexão acontece no LinkedIn.
 - **Oportunidades são um mural, não um ATS.** Cadastro mínimo de quatro campos (título, empresa, descrição, link ou e-mail); sem candidatura dentro da plataforma, sem funil, sem triagem. Confirma o ponto A-1 da v1 e o refinamento ("não tem interação do usuário, somente para ver").
@@ -233,3 +234,4 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 |--------|------|-----------|-------|---------|
 | 1.0 | 11/09/2026 | Criação do documento — histórias do ÉP-07 (Vitrine: Profissionais da comunidade e Oportunidades) para Não-Filiado, Filiado e Admin | Vitor Leonardo | Nome do revisor |
 | 1.1 | 11/09/2026 | Inversão do modelo de acesso: Profissionais da comunidade visível a todos (só Filiados aparecem); Oportunidades exclusivas para Filiados com prévia desfocada; remoção de métricas de visualizações/cliques e da exportação | Vitor Leonardo | Nome do revisor |
+| 1.2 | 17/10/2026 | Oportunidades passam a exigir autenticação: visitantes não autenticados não veem nem a prévia desfocada (RN-07.02.2, RN-07.03.1 e decisões) | Ana Clara Borges | |
