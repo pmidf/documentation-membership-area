@@ -124,7 +124,7 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 
 **Critérios de aceite**
 
-1. **Dado** que sou Filiado ativo, **quando** acesso "Conteúdo exclusivo", **então** vejo os destaques no topo e, abaixo, os conteúdos publicados agrupados por categoria, em _cards_ com título, tipo (vídeo ou material), duração (para vídeos) e data de publicação.
+1. **Dado** que sou Filiado ativo, **quando** acesso "Conteúdo exclusivo", **então** vejo os conteúdos publicados agrupados por categoria, em _cards_ com título, tipo (vídeo ou material), duração (para vídeos) e data de publicação.
 2. **Dado** que busco por texto, **quando** digito, **então** título e descrição são pesquisados.
 3. **Dado** que filtro por categoria ou tipo, **quando** aplico, **então** a listagem responde ao filtro.
 4. **Dado** que marquei um conteúdo como consumido, **quando** o vejo no catálogo, **então** o _card_ exibe a marca "Consumido".
@@ -134,7 +134,7 @@ Legenda: **L** = Ler · **P** = Prévia desfocada · **E** = Escrever · **—**
 
 - RN-06.02.1 — A listagem retorna apenas metadados; o identificador do vídeo e a URL dos materiais **só** são entregues ao abrir o conteúdo (US-06.03), nunca na listagem.
 - RN-06.02.2 — Só conteúdos com status `PUBLICADO` aparecem no catálogo.
-- RN-06.02.3 — Ordenação padrão dentro de cada categoria: mais recentes primeiro; as categorias seguem a ordem definida pelo Admin; destaques respeitam a ordem definida pelo Admin.
+- RN-06.02.3 — Ordenação padrão dentro de cada categoria: mais recentes primeiro; as categorias seguem a ordem definida pelo Admin.
 
 ---
 
@@ -182,7 +182,7 @@ Os recursos do PMI Global são cadastrados como `MATERIAL` na categoria "Conheci
 **Regras de negócio**
 
 - RN-06.04.1 — A plataforma apenas **redireciona**; nunca copia, espelha ou faz _scraping_ de conteúdo do PMI Global, respeitando a propriedade intelectual do PMI.
-- RN-06.04.2 — Os domínios oficiais do PMI (`pmi.org`, `projectmanagement.com` e subdomínios) fazem parte da lista de domínios permitidos para `MATERIAL` (RN-06.05.1).
+- RN-06.04.2 — ~~Os domínios oficiais do PMI (`pmi.org`, `projectmanagement.com` e subdomínios) fazem parte da lista de domínios permitidos para `MATERIAL` (RN-06.05.1).~~ Suspensa na versão 1.3, junto com a RN-06.05.1: por enquanto qualquer link `http`/`https` é aceito.
 - RN-06.04.3 — Os links do PMI Global são marcados como Público pelo Admin (RN-06.08.1) e ficam visíveis e clicáveis para Não-Filiado, sem desfoque, seguindo US-06.08.
 
 ---
@@ -200,12 +200,12 @@ Os recursos do PMI Global são cadastrados como `MATERIAL` na categoria "Conheci
 **Critérios de aceite**
 
 1. **Dado** que crio um conteúdo, **quando** informo título, descrição, tipo (vídeo ou material), categoria, URL e nível de acesso (Público ou Exclusivo para filiados), **então** clico no botão Publicar Conteúdo para que ele seja visível.
-2. **Dado** que o tipo é `VIDEO`, **quando** colo a URL (`youtube.com/watch?v=`, `youtu.be/` ou `youtube.com/embed/`), **então** a plataforma extrai o identificador do vídeo, busca automaticamente título sugerido e duração, e exibe o player de pré-visualização para confirmar que a incorporação funciona.
+2. **Dado** que o tipo é `VIDEO`, **quando** colo a URL (`youtube.com/watch?v=`, `youtu.be/` ou `youtube.com/embed/`), **então** a plataforma extrai o identificador do vídeo e exibe o player de pré-visualização para confirmar que a incorporação funciona.
 3. **Dado** que preciso de uma categoria que ainda não existe, **quando** a crio, **então** ela fica disponível no cadastro de conteúdo e no filtro do catálogo.
 
 **Regras de negócio**
 
-- RN-06.05.1 — URLs de qualquer tipo são validadas contra lista de domínios permitidos, para que a área de conteúdo não funcione como redirecionador aberto. Para `MATERIAL`, a lista inclui os domínios oficiais do PMI (RN-06.04.2).
+- RN-06.05.1 — ~~URLs de qualquer tipo são validadas contra lista de domínios permitidos, para que a área de conteúdo não funcione como redirecionador aberto. Para `MATERIAL`, a lista inclui os domínios oficiais do PMI (RN-06.04.2).~~ Suspensa na versão 1.3: por enquanto qualquer link `http`/`https` é aceito.
 - RN-06.05.2 — ~~A publicação é registrada em auditoria com usuário, data e hora.~~ Retirada na versão 1.2: decidimos não ter trilha de auditoria por enquanto.
 - RN-06.05.3 — As categorias são criadas, renomeadas e reordenadas pelo Admin. Não são excluídas, porque os conteúdos dependem delas.
 
@@ -222,7 +222,7 @@ Os recursos do PMI Global são cadastrados como `MATERIAL` na categoria "Conheci
 **Critérios de aceite**
 
 1. **Dado** que edito um conteúdo publicado, **quando** salvo, **então** a alteração é imediata para os usuários.
-2. **Dado** que troco a URL de um vídeo, **quando** salvo, **então** a duração e o player de pré-visualização são atualizados.
+2. **Dado** que troco a URL de um vídeo, **quando** salvo, **então** o player de pré-visualização é atualizado.
 3. **Dado** que removo um conteúdo, **quando** confirmo, **então** ele some do catálogo, mas o histórico de visualizações permanece.
 
 **Regras de negócio**
@@ -264,6 +264,8 @@ Os recursos do PMI Global são cadastrados como `MATERIAL` na categoria "Conheci
 - **Dois tipos de conteúdo**: vídeo do YouTube (`VIDEO`) e material (`MATERIAL`). Sem upload de arquivos na plataforma. O tipo `LINK_PMI_GLOBAL`, previsto na versão 1.0, foi retirado: links do PMI Global são materiais da categoria "Conhecimento PMI".
 - **Sem capas nos _cards_.** A capa de um vídeo do YouTube fica em um endereço que contém o identificador do vídeo (`i.ytimg.com/vi/<id>/...`); enviá-la na listagem entregaria o vídeo exclusivo a quem não é Filiado. Materiais também não teriam de onde tirar uma capa.
 - **Categorias cadastráveis pelo Admin**, sem depender de uma nova versão do sistema (US-06.05).
+- **Sem destaques no catálogo.** Os conteúdos aparecem só agrupados por categoria; não há seção de destaques no topo nem ordem de destaque definida pelo Admin.
+- **Sem integração com a API do YouTube.** O Admin informa o link, o título e, opcionalmente, a duração; a plataforma só extrai o identificador do vídeo da URL, sem chamadas externas.
 - **Sem trilha de auditoria por enquanto.** Publicação, edição, arquivamento e exportação de acessos não são registrados em auditoria (RN-06.05.2 e critério 4 da US-06.07 retirados).
 - **Sem progresso de visualização** nem "continuar assistindo": registra-se apenas o acesso (questão 6).
 - **Fora do escopo:** comentários, avaliações ou curtidas em conteúdos (item 15 do brainstorming, não essencial); playlists ou trilhas de aprendizagem; certificados por conteúdo assistido; marca d'água com nome do filiado (impossível com YouTube).
@@ -286,3 +288,4 @@ Os recursos do PMI Global são cadastrados como `MATERIAL` na categoria "Conheci
 | 1.0    | 11/09/2026 | Criação do documento — histórias do ÉP-06 (Conteúdo Exclusivo) para Não-Filiado, Filiado e Admin, com análise das possibilidades de proteção de vídeos do YouTube | Vitor Leonardo | Ana Clara Borges |
 | 1.1    | 13/09/2026 | Adição da US-06.08 e adaptações nas demais histórias para coerência. Retirada de possibilidade de usuários visitantes | Ana Clara Borges |  |
 | 1.2    | 22/10/2026 | Alinhamento com o modelo de dados e as issues de backend: tipos reduzidos a `VIDEO` e `MATERIAL` (retirada do `LINK_PMI_GLOBAL`), sem capas nos _cards_, categorias cadastráveis pelo Admin, retirada da auditoria e do progresso de visualização, correção dos links do mapa das histórias | Ana Clara Borges |  |
+| 1.3    | 22/10/2026 | Retirada dos destaques do catálogo (US-06.02 e RN-06.02.3) e da integração com a API do YouTube (US-06.05 e US-06.06) | Ana Clara Borges |  |
